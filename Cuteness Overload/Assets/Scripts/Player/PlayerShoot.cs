@@ -25,7 +25,6 @@ public class PlayerShoot : MonoBehaviour
         FireBullet();
         Aim();
         Reload();
-        MoveProjPoint();
     }
 
     public void FireBullet()
@@ -33,7 +32,8 @@ public class PlayerShoot : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             GameObject instance = Instantiate(bullet, projSpawn.transform.position, projSpawn.transform.rotation);
-            instance.GetComponent<Rigidbody>().AddForce(FPSCam.transform.forward * bulletspeed);
+            instance.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
+            instance.transform.forward = this.transform.forward;
         }
     }
 

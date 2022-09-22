@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class BulletManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private float bulletspeed = 100f;
+    [SerializeField]
+    private float lifeTime = 2f;
+
+    private float lifeAlive;
+
+    private void Start()
     {
-        
+        lifeAlive = lifeTime;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        transform.position += transform.forward * bulletspeed * Time.deltaTime;
+
+        lifeAlive -= Time.deltaTime;
+        if (lifeAlive <= 0f)
+        {
+            Destroy(gameObject);
+        }
     }
 }

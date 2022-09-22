@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5000565524366684831}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.54, z: 0}
+  m_LocalPosition: {x: 0, y: 0.54, z: 0.384}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -212,4 +212,4 @@ MonoBehaviour:
   FPSCam: {fileID: 0}
   projSpawn: {fileID: 8934736774065059058}
   bullet: {fileID: 8852395931016358533, guid: 19a03b933605a1247be89aa03b1015e0, type: 3}
-  bulletspeed: 10
+  bulletspeed: 100
