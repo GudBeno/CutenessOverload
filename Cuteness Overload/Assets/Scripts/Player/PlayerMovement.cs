@@ -6,8 +6,12 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private float speed = 5f;
+
+    
     [SerializeField]
     private float jumpHeight = 325f;
+    [SerializeField] bool onGround;
+
     [SerializeField]
     private GameObject ground;
     [SerializeField]
@@ -32,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         player = GetComponent<Transform>();
         CamTrans = FPSCam.GetComponent<Transform>();
+
+        
     }
 
     private void Update()
@@ -44,9 +50,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void NormalMove()
     {
+        
         if (Input.GetKey(forward))
         {
             rb.AddForce(CamTrans.transform.forward * speed);
+
+            
         }
         if (Input.GetKey(backward))
         {
@@ -63,15 +72,26 @@ public class PlayerMovement : MonoBehaviour
             //transform.Rotate(0, Rotspeed, 0);
         }
     }
+    
 
     public void Jump()
     {
-        if (distGround <= 1.25)
+        if ((distGround <= 1.25) || onGround)
         {
             if (Input.GetKeyDown(jump))
             {
                 rb.AddForce(transform.up * jumpHeight);
             }
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.collider.gameObject.CompareTag("Ground"))
+        {
+            print("on the ground");
+            onGround = true;
+
         }
     }
 
