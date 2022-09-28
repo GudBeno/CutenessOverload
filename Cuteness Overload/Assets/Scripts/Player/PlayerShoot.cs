@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerShoot : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class PlayerShoot : MonoBehaviour
     private Transform projSpawn;
     [SerializeField]
     private GameObject bullet;
+    [SerializeField]
+    private CinemachineVirtualCamera vcam;
 
     private KeyCode reload = KeyCode.R;
 
@@ -40,7 +43,14 @@ public class PlayerShoot : MonoBehaviour
 
     public void Aim()
     {
-
+        if (Input.GetMouseButton(1))
+        {
+            vcam.m_Lens.FieldOfView = 40;
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            vcam.m_Lens.FieldOfView = 60;
+        }
     }
 
     public void Reload()

@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
-    private float speed = 5f;
+    private float speed = 25f;
     [SerializeField]
-    private float jumpHeight = 325f;
+    private float jumpHeight = 3000f;
+    [SerializeField]
+    private float dodgeSpeed = 50f;
     [SerializeField]
     private GameObject ground;
     [SerializeField]
@@ -25,7 +27,10 @@ public class PlayerMovement : MonoBehaviour
     private KeyCode jump = KeyCode.Space;
 
     private float distGround;
-    private bool CanJump;
+    private bool moveFor = false;
+    private bool moveBack = false;
+    private bool moveLeft = false;
+    private bool moveRight = false;
 
     private void Start()
     {
@@ -40,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
         NormalMove();
         Jump();
         Rotate();
+        Dodge();
     }
 
     public void NormalMove()
@@ -47,21 +53,41 @@ public class PlayerMovement : MonoBehaviour
         
         if (Input.GetKey(forward))
         {
-            rb.AddForce(transform.forward * speed);
+            rb.AddForce(transform.forward * speed);//try rb.velocity
+            moveFor = true;
+        }
+        if (Input.GetKeyUp(forward))
+        {
+            moveFor = false;
         }
         if (Input.GetKey(backward))
         {
             rb.AddForce(transform.forward * -speed);
+            moveBack = true;
+        }
+        if (Input.GetKeyUp(backward))
+        {
+            moveBack = false;
         }
         if (Input.GetKey(left))
         {
             rb.AddForce(transform.right * -speed);
+            moveLeft = true;
             //transform.Rotate(0, -Rotspeed, 0);
+        }
+        if (Input.GetKeyUp(left))
+        {
+            moveLeft = false;
         }
         if (Input.GetKey(right))
         {
             rb.AddForce(transform.right * speed);
+            moveRight = true;
             //transform.Rotate(0, Rotspeed, 0);
+        }
+        if (Input.GetKeyUp(right))
+        {
+            moveRight = false;
         }
     }
     
@@ -84,4 +110,26 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(EulerRotation);
     }
 
+    public void Dodge()
+    {
+        if (Input.GetKeyDown(dodge))
+        {
+            if (moveFor)
+            {
+                rb.AddForce(transform.forward * dodgeSpeed);
+            }
+            if (moveBack)
+            {
+                rb.AddForce(transform.forward * -dodgeSpeed);
+            }
+            if (moveLeft)
+            {
+                rb.AddForce(transform.right * -dodgeSpeed);
+            }
+            if (moveRight)
+            {
+                rb.AddForce(transform.right * dodgeSpeed);
+            }
+        }
+    }
 }

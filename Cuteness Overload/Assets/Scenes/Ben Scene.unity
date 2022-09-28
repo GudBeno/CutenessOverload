@@ -1539,9 +1539,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1574936401}
     - target: {fileID: 5000565524551797825, guid: 8f0565fa34e51574ba46e7c249ccba6c, type: 3}
+      propertyPath: dodgeSpeed
+      value: 7500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000565524551797825, guid: 8f0565fa34e51574ba46e7c249ccba6c, type: 3}
       propertyPath: jumpHeight
       value: 3000
       objectReference: {fileID: 0}
+    - target: {fileID: 7279277523742258181, guid: 8f0565fa34e51574ba46e7c249ccba6c, type: 3}
+      propertyPath: vcam
+      value: 
+      objectReference: {fileID: 2146973976}
     - target: {fileID: 7279277523742258181, guid: 8f0565fa34e51574ba46e7c249ccba6c, type: 3}
       propertyPath: FPSCam
       value: 
