@@ -25,15 +25,16 @@ public class PlayerShoot : MonoBehaviour
         FireBullet();
         Aim();
         Reload();
+        Debug.DrawRay(FPSCam.transform.position, FPSCam.transform.forward, Color.magenta);
     }
 
     public void FireBullet()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            GameObject instance = Instantiate(bullet, projSpawn.transform.position, projSpawn.transform.rotation);
+            GameObject instance = Instantiate(bullet, FPSCam.transform.position, FPSCam.transform.rotation);
             instance.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
-            instance.transform.forward = this.transform.forward;
+            instance.transform.forward = FPSCam.transform.forward;
         }
     }
 

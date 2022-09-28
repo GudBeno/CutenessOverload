@@ -6,12 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private float speed = 5f;
-
-    
     [SerializeField]
     private float jumpHeight = 325f;
-    [SerializeField] bool onGround;
-
     [SerializeField]
     private GameObject ground;
     [SerializeField]
@@ -36,8 +32,6 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         player = GetComponent<Transform>();
         CamTrans = FPSCam.GetComponent<Transform>();
-
-        
     }
 
     private void Update()
@@ -53,22 +47,20 @@ public class PlayerMovement : MonoBehaviour
         
         if (Input.GetKey(forward))
         {
-            rb.AddForce(CamTrans.transform.forward * speed);
-
-            
+            rb.AddForce(transform.forward * speed);
         }
         if (Input.GetKey(backward))
         {
-            rb.AddForce(CamTrans.transform.forward * -speed);
+            rb.AddForce(transform.forward * -speed);
         }
         if (Input.GetKey(left))
         {
-            rb.AddForce(CamTrans.transform.right * -speed);
+            rb.AddForce(transform.right * -speed);
             //transform.Rotate(0, -Rotspeed, 0);
         }
         if (Input.GetKey(right))
         {
-            rb.AddForce(CamTrans.transform.right * speed);
+            rb.AddForce(transform.right * speed);
             //transform.Rotate(0, Rotspeed, 0);
         }
     }
@@ -76,22 +68,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
-        if ((distGround <= 1.25) || onGround)
+        if (distGround <= 1.25)
         {
             if (Input.GetKeyDown(jump))
             {
                 rb.AddForce(transform.up * jumpHeight);
             }
-        }
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.collider.gameObject.CompareTag("Ground"))
-        {
-            print("on the ground");
-            onGround = true;
-
         }
     }
 

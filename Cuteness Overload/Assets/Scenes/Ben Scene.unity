@@ -1518,9 +1518,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5000565524551797824, guid: 8f0565fa34e51574ba46e7c249ccba6c, type: 3}
+      propertyPath: m_Drag
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000565524551797824, guid: 8f0565fa34e51574ba46e7c249ccba6c, type: 3}
+      propertyPath: m_Mass
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5000565524551797825, guid: 8f0565fa34e51574ba46e7c249ccba6c, type: 3}
       propertyPath: speed
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5000565524551797825, guid: 8f0565fa34e51574ba46e7c249ccba6c, type: 3}
       propertyPath: FPSCam
@@ -1530,6 +1538,10 @@ PrefabInstance:
       propertyPath: ground
       value: 
       objectReference: {fileID: 1574936401}
+    - target: {fileID: 5000565524551797825, guid: 8f0565fa34e51574ba46e7c249ccba6c, type: 3}
+      propertyPath: jumpHeight
+      value: 3000
+      objectReference: {fileID: 0}
     - target: {fileID: 7279277523742258181, guid: 8f0565fa34e51574ba46e7c249ccba6c, type: 3}
       propertyPath: FPSCam
       value: 
