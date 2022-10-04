@@ -13,6 +13,14 @@ public class PlayerShoot : MonoBehaviour
     private GameObject bullet;
     [SerializeField]
     private CinemachineVirtualCamera vcam;
+    [SerializeField]
+    private float _ammo = 10f;
+    [SerializeField]
+    private float _storedAmmo = 100f;
+    [SerializeField]
+    private float _ammoAmount = 10f;
+    [SerializeField]
+    private float maxAmmoStored = 100f;
 
     private KeyCode reload = KeyCode.R;
 
@@ -35,9 +43,13 @@ public class PlayerShoot : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            GameObject instance = Instantiate(bullet, FPSCam.transform.position, FPSCam.transform.rotation);
-            instance.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
-            instance.transform.forward = FPSCam.transform.forward;
+            if (_ammo > 0)
+            {
+                GameObject instance = Instantiate(bullet, FPSCam.transform.position, FPSCam.transform.rotation);
+                instance.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
+                instance.transform.forward = FPSCam.transform.forward;
+                _ammo--;
+            }
         }
     }
 
@@ -55,13 +67,29 @@ public class PlayerShoot : MonoBehaviour
 
     public void Reload()
     {
-
+        if (Input.GetKeyDown(reload))
+        {
+            if (_ammo < _ammoAmount)
+            {
+                float ammoTransferred = _ammoAmount - _ammo;
+                _ammo = _ammo + ammoTransferred;
+                _storedAmmo = _storedAmmo - ammoTransferred;
+                //ammoTransferred = 0;
+            }
+        }
     }
 
-    public void MoveProjPoint()
+    public void CollectAmmo()
     {
-        Vector3 EulerRotation = new Vector3(FPSCam.transform.eulerAngles.x, FPSCam.transform.eulerAngles.y, FPSCam.transform.eulerAngles.z);
+        if(_storedAmmo < maxAmmoStored)
+        {
+            float ammoTransferred = maxAmmoStored - _storedAmmo;
+            _storedAmmo = _storedAmmo + ammoTransferred;
+        }
+    }
 
-        projSpawn.transform.rotation = Quaternion.Euler(EulerRotation);
+    private void OnTriggerEnter(Collider other)
+    {
+        CollectAmmo();
     }
 }
