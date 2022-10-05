@@ -14,11 +14,11 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField]
     private CinemachineVirtualCamera vcam;
     [SerializeField]
-    private float _ammo = 10f;
+    private float _ammoInClip = 10f;
     [SerializeField]
     private float _storedAmmo = 100f;
     [SerializeField]
-    private float _ammoAmount = 10f;
+    private float allowedAmmo = 10f;
     [SerializeField]
     private float maxAmmoStored = 100f;
 
@@ -43,12 +43,12 @@ public class PlayerShoot : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (_ammo > 0)
+            if (_ammoInClip > 0)
             {
                 GameObject instance = Instantiate(bullet, FPSCam.transform.position, FPSCam.transform.rotation);
                 instance.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
                 instance.transform.forward = FPSCam.transform.forward;
-                _ammo--;
+                _ammoInClip--;
             }
         }
     }
@@ -69,12 +69,27 @@ public class PlayerShoot : MonoBehaviour
     {
         if (Input.GetKeyDown(reload))
         {
-            if (_ammo < _ammoAmount)
+            if (_ammoInClip < allowedAmmo || _storedAmmo > 0)
             {
-                float ammoTransferred = _ammoAmount - _ammo;
-                _ammo = _ammo + ammoTransferred;
-                _storedAmmo = _storedAmmo - ammoTransferred;
-                //ammoTransferred = 0;
+                if (_storedAmmo < allowedAmmo)
+                {
+                    float movedAmmo = allowedAmmo - _ammoInClip;
+                    if (movedAmmo >= _storedAmmo)
+                    {
+                        _ammoInClip = _ammoInClip + _storedAmmo;
+                        _storedAmmo = 0;
+                    }
+                    else if (movedAmmo < _storedAmmo)
+                    {
+                        _ammoInClip = _ammoInClip + movedAmmo;
+                        _storedAmmo = _storedAmmo - movedAmmo;
+                    }
+                }
+                else if (_storedAmmo >= allowedAmmo){
+                    float ammoReloaded = allowedAmmo - _ammoInClip;
+                    _ammoInClip = _ammoInClip + ammoReloaded;
+                    _storedAmmo = _storedAmmo - ammoReloaded;
+                }
             }
         }
     }
