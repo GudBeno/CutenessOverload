@@ -15,12 +15,12 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField]
     private CinemachineVirtualCamera vcam;
     [SerializeField]
-    private float allowedAmmo = 10f;
+    private float allowedAmmo = 10f; //This is the size of the magazine clip, the amount of ammo the gun can store at one time
     [SerializeField]
-    private float maxAmmoStored = 100f;
+    private float maxAmmoStored = 100f; //This is the size of amount of ammo you can store outside of the clip at one time
 
-    public float _ammoInClip = 10f;
-    public float _storedAmmo = 100f;
+    public float _ammoInClip = 10f; //This is the ammo in the clip. Public so it can be used in UI
+    public float _storedAmmo = 100f; //This is the ammo stored on the body outside of the clip. Public so it can be used in UI
 
     private KeyCode reload = KeyCode.R;
 
@@ -29,10 +29,10 @@ public class PlayerShoot : MonoBehaviour
 
     private void Start()
     {
-        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void Update()
+    private void Update() //Runs the functions. Also currently draws a ray where the camera is aiming
     {
         FireBullet();
         Aim();
@@ -40,7 +40,7 @@ public class PlayerShoot : MonoBehaviour
         Debug.DrawRay(FPSCam.transform.position, FPSCam.transform.forward, Color.magenta);
     }
 
-    public void FireBullet()
+    public void FireBullet() //Fires bullet function. 
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -54,7 +54,7 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    public void Aim()
+    public void Aim() //Aiming in function, done by changing the FOV
     {
         if (Input.GetMouseButton(1))
         {
@@ -66,7 +66,7 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    public void Reload()
+    public void Reload() //Reloading. Has checks in place so you dont go into negative ammo
     {
         if (Input.GetKeyDown(reload))
         {
@@ -95,7 +95,7 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    public void CollectAmmo()
+    public void CollectAmmo() //Collect Ammo function. Randomises the amount you collect each time. Has checks so you dont get negative ammo
     {
         if(_storedAmmo < maxAmmoStored)
         {
@@ -112,7 +112,7 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) //When the player enters the trigger of an Ammo Collectable, runs the CollectAmmo function.
     {
         if(other.gameObject.CompareTag("AmmoCollectable"))
         {

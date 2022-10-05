@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float sprintSpeed = 30f;
     [SerializeField]
+    private float jumpGravity = 12f;
+    [SerializeField]
     private GameObject ground;
     [SerializeField]
     private GameObject FPSCam;
@@ -35,14 +37,14 @@ public class PlayerMovement : MonoBehaviour
     private bool moveLeft = false;
     private bool moveRight = false;
 
-    private void Start()
+    private void Start() //Gets the Components needed in the later functions
     {
         rb = GetComponent<Rigidbody>();
         player = GetComponent<Transform>();
         CamTrans = FPSCam.GetComponent<Transform>();
     }
 
-    private void Update()
+    private void Update() //Checks the distance constantly for the jumping. Runs the functions.
     {
         distGround = player.transform.position.y - ground.transform.position.y;
         NormalMove();
@@ -50,9 +52,10 @@ public class PlayerMovement : MonoBehaviour
         Rotate();
         Dodge();
         Sprint();
+        Debug.Log("Velocity: " + rb.velocity);
     }
 
-    public void NormalMove()
+    public void NormalMove() //Movement function
     {
         
         if (Input.GetKey(forward))
@@ -94,25 +97,26 @@ public class PlayerMovement : MonoBehaviour
     }
     
 
-    public void Jump()
+    public void Jump() //Jump function, based on distance to the ground
     {
         if (distGround <= 1.25)
         {
             if (Input.GetKeyDown(jump))
             {
                 rb.AddForce(transform.up * jumpHeight);
+                rb.AddForce(transform.up * jumpGravity);
             }
         }
     }
 
-    public void Rotate()
+    public void Rotate() //Rotates the player with the camera around the y axis
     {
         Vector3 EulerRotation = new Vector3(transform.eulerAngles.x, CamTrans.transform.eulerAngles.y, transform.eulerAngles.z);
 
         transform.rotation = Quaternion.Euler(EulerRotation);
     }
 
-    public void Dodge()
+    public void Dodge() //Dodge function, done by increasing speed
     {
         if (Input.GetKeyDown(dodge))
         {
@@ -135,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Sprint()
+    public void Sprint() //Sprint function, done by increasing speed, but not as much as a dodge
     {
         if (Input.GetKey(sprint))
         {
