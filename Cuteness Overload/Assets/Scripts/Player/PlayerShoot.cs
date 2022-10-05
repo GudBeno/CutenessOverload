@@ -26,6 +26,8 @@ public class PlayerShoot : MonoBehaviour
 
     public float bulletspeed = 10f;
 
+    private AmmoCollectable ammoCollected;
+
     private void Start()
     {
         
@@ -98,13 +100,18 @@ public class PlayerShoot : MonoBehaviour
     {
         if(_storedAmmo < maxAmmoStored)
         {
-            float ammoTransferred = maxAmmoStored - _storedAmmo;
-            _storedAmmo = _storedAmmo + ammoTransferred;
+            float ammoGone = maxAmmoStored - _storedAmmo;
+            float ammoReceived = ammoCollected.ammoGiven;
+            _storedAmmo = _storedAmmo + ammoReceived;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        CollectAmmo();
+        if(other.gameObject.CompareTag("AmmoCollectable"))
+        {
+            CollectAmmo();
+            other.gameObject.SetActive(false);
+        }
     }
 }
