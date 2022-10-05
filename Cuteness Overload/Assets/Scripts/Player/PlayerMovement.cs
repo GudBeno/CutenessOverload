@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float dodgeSpeed = 50f;
     [SerializeField]
+    private float sprintSpeed = 30f;
+    [SerializeField]
     private GameObject ground;
     [SerializeField]
     private GameObject FPSCam;
@@ -25,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private KeyCode right = KeyCode.D;
     private KeyCode dodge = KeyCode.E;
     private KeyCode jump = KeyCode.Space;
+    private KeyCode sprint = KeyCode.LeftShift;
 
     private float distGround;
     private bool moveFor = false;
@@ -46,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
         Jump();
         Rotate();
         Dodge();
+        Sprint();
     }
 
     public void NormalMove()
@@ -73,7 +77,6 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(transform.right * -speed);
             moveLeft = true;
-            //transform.Rotate(0, -Rotspeed, 0);
         }
         if (Input.GetKeyUp(left))
         {
@@ -83,7 +86,6 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(transform.right * speed);
             moveRight = true;
-            //transform.Rotate(0, Rotspeed, 0);
         }
         if (Input.GetKeyUp(right))
         {
@@ -129,6 +131,29 @@ public class PlayerMovement : MonoBehaviour
             if (moveRight)
             {
                 rb.AddForce(transform.right * dodgeSpeed);
+            }
+        }
+    }
+
+    public void Sprint()
+    {
+        if (Input.GetKey(sprint))
+        {
+            if (moveFor)
+            {
+                rb.AddForce(transform.forward * sprintSpeed);
+            }
+            if (moveBack)
+            {
+                rb.AddForce(transform.forward * -sprintSpeed);
+            }
+            if (moveLeft)
+            {
+                rb.AddForce(transform.right * -sprintSpeed);
+            }
+            if (moveRight)
+            {
+                rb.AddForce(transform.right * sprintSpeed);
             }
         }
     }

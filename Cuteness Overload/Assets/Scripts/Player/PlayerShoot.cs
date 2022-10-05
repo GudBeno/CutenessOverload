@@ -100,7 +100,6 @@ public class PlayerShoot : MonoBehaviour
     {
         if(_storedAmmo < maxAmmoStored)
         {
-            float ammoGone = maxAmmoStored - _storedAmmo;
             float ammoReceived = ammoCollected.ammoGiven;
             _storedAmmo = _storedAmmo + ammoReceived;
         }
