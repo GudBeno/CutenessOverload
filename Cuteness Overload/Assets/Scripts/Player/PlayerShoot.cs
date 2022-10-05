@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Cinemachine;
 
@@ -26,7 +27,6 @@ public class PlayerShoot : MonoBehaviour
 
     public float bulletspeed = 10f;
 
-    private AmmoCollectable ammoCollected;
 
     private void Start()
     {
@@ -100,8 +100,16 @@ public class PlayerShoot : MonoBehaviour
     {
         if(_storedAmmo < maxAmmoStored)
         {
-            float ammoReceived = ammoCollected.ammoGiven;
-            _storedAmmo = _storedAmmo + ammoReceived;
+            float ammoCollectable = ((float)Math.Round(UnityEngine.Random.Range(10f, 75f), 0));
+            float ammoAllowable = maxAmmoStored - _storedAmmo;
+            if(ammoAllowable < ammoCollectable)
+            {
+                _storedAmmo = _storedAmmo + ammoAllowable;
+            }
+            else if (ammoAllowable > ammoCollectable)
+            {
+                _storedAmmo = _storedAmmo + ammoCollectable;
+            }
         }
     }
 
