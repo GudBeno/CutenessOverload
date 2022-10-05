@@ -15,13 +15,12 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField]
     private CinemachineVirtualCamera vcam;
     [SerializeField]
-    private float _ammoInClip = 10f;
-    [SerializeField]
-    private float _storedAmmo = 100f;
-    [SerializeField]
     private float allowedAmmo = 10f;
     [SerializeField]
     private float maxAmmoStored = 100f;
+
+    public float _ammoInClip = 10f;
+    public float _storedAmmo = 100f;
 
     private KeyCode reload = KeyCode.R;
 
@@ -30,7 +29,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void Start()
     {
-        
+        Cursor.visible = false;
     }
 
     private void Update()
