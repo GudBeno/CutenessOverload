@@ -5,7 +5,15 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
+<<<<<<< Updated upstream
     private float speed = 25f;
+=======
+    public float speed = 5f;
+
+    //[SerializeField] float sprintSpeed;
+
+
+>>>>>>> Stashed changes
     [SerializeField]
     private float jumpHeight = 3000f;
     [SerializeField]
@@ -57,9 +65,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void NormalMove() //Movement function
     {
+
         
         if (Input.GetKey(forward))
         {
+<<<<<<< Updated upstream
             rb.AddForce(transform.forward * speed);//try rb.velocity
             moveFor = true;
         }
@@ -93,6 +103,41 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp(right))
         {
             moveRight = false;
+=======
+            rb.AddForce(CamTrans.transform.forward * speed);
+            //if (Input.GetKeyDown(KeyCode.LeftShift))
+            //{
+            //    print("This nigga shifting forward."+sprintSpeed);
+            //    rb.AddForce(CamTrans.transform.forward * speed * sprintSpeed);
+            //}
+        }
+        if (Input.GetKey(backward))
+        {
+            rb.AddForce(CamTrans.transform.forward * -speed);
+            //if (Input.GetKeyDown(KeyCode.LeftShift))
+            //{
+            //    print("This nigga shifting back");
+            //}
+        }
+        if (Input.GetKey(left))
+        {
+            rb.AddForce(CamTrans.transform.right * -speed);
+            //transform.Rotate(0, -Rotspeed, 0);
+
+            //if (Input.GetKeyDown(KeyCode.LeftShift))
+            //{
+            //    print("This nigga shifting left");
+            //}
+        }
+        if (Input.GetKey(right))
+        {
+            rb.AddForce(CamTrans.transform.right * speed);
+            //transform.Rotate(0, Rotspeed, 0);
+            //if (Input.GetKeyDown(KeyCode.LeftShift))
+            //{
+            //    print("This nigga shifting right");
+            //}
+>>>>>>> Stashed changes
         }
     }
     
