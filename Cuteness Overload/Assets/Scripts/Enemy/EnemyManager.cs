@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public float health;
+    public float health = 5;
 
     private void OnTriggerEnter(Collider other)
     {

@@ -26,7 +26,10 @@ public class PlayerDamage : MonoBehaviour
             CollectHealth();
             other.gameObject.SetActive(false);
         }
-        if (other.gameObject.CompareTag("Enemy"))
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             TakeDamage();
         }
