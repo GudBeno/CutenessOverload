@@ -9,11 +9,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float jumpHeight = 3000f;
     [SerializeField]
-    private float dodgeSpeed = 50f;
+    private float dodgeSpeed = 7500f;
     [SerializeField]
-    private float sprintSpeed = 30f;
+    private float sprintSpeed = 27.5f;
     [SerializeField]
-    private float jumpGravity = 12f;
+    private float jumpGravity = 50f;
     [SerializeField]
     private GameObject ground;
     [SerializeField]

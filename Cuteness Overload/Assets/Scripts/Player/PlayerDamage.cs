@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerDamage : MonoBehaviour
 {
@@ -10,9 +11,12 @@ public class PlayerDamage : MonoBehaviour
     [SerializeField]
     private float maxPlayerHealth = 10f; //This is the max amount of health the player can have
 
+    [SerializeField]
+    private Text healthText;
+
     private void Update()
     {
-
+        healthText.text = playerHealth.ToString();
     }
 
     private void OnTriggerEnter(Collider other) //This runs when entering a health collectable. Runs the Collect Health function

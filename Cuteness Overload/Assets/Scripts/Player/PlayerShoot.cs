@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.UI;
 
 public class PlayerShoot : MonoBehaviour
 {
@@ -26,6 +27,10 @@ public class PlayerShoot : MonoBehaviour
 
     public float bulletspeed = 10f;
 
+    [SerializeField]
+    private Text clipAmmoText;
+    [SerializeField]
+    private Text storedAmmoText;
 
     private void Start() //Locks the cursor to the centre and hides it
     {
@@ -38,6 +43,8 @@ public class PlayerShoot : MonoBehaviour
         Aim();
         Reload();
         Debug.DrawRay(FPSCam.transform.position, FPSCam.transform.forward, Color.magenta);
+        clipAmmoText.text = _ammoInClip.ToString();
+        storedAmmoText.text = _storedAmmo.ToString();
     }
 
     public void FireBullet() //Fires bullet function. 
