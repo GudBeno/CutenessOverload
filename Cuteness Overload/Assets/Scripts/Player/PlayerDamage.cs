@@ -22,6 +22,10 @@ public class PlayerDamage : MonoBehaviour
             CollectHealth();
             other.gameObject.SetActive(false);
         }
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            TakeDamage();
+        }
     }
 
     public void CollectHealth() //Collect Health function. Randomises the amount of health and checks that you wont have more health than allowed.
@@ -43,6 +47,6 @@ public class PlayerDamage : MonoBehaviour
 
     public void TakeDamage() //Taking damage script, decreases the health.
     {
-
+        playerHealth--;
     }
 }

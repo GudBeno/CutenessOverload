@@ -27,7 +27,7 @@ public class PlayerShoot : MonoBehaviour
     public float bulletspeed = 10f;
 
 
-    private void Start()
+    private void Start() //Locks the cursor to the centre and hides it
     {
         Cursor.lockState = CursorLockMode.Locked;
     }

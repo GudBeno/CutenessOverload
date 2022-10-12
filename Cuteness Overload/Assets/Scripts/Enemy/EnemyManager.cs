@@ -11,6 +11,7 @@ public class EnemyManager : MonoBehaviour
         if (other.gameObject.CompareTag("Bullet"))
         {
             health--;
+            Destroy(other);
         }
     }
 

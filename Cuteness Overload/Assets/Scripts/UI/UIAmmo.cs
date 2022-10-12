@@ -13,6 +13,11 @@ public class UIAmmo : MonoBehaviour
 
     private PlayerShoot playShoot;
 
+    private void Start()
+    {
+        
+    }
+
     private void Update()
     {
         ammoStored.text = (playShoot._ammoInClip).ToString();

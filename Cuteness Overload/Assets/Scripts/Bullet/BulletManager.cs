@@ -16,8 +16,7 @@ public class BulletManager : MonoBehaviour
         lifeAlive = lifeTime;
     }
 
-    private void Update() //Destroys the bullet after a certain time limit. To be changed eventually when we add enemies
-                          //Will eventually despawn as it hits an enemy
+    private void Update() //Destroys the bullet after a certain time limit. Also is destroyed if it hits an enemy (in other script)
     {
         transform.position += transform.forward * bulletspeed * Time.deltaTime;
 

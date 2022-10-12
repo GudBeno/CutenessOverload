@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     private bool moveBack = false;
     private bool moveLeft = false;
     private bool moveRight = false;
+    private bool canJump = false;
 
     private void Start() //Gets the Components needed in the later functions
     {
@@ -60,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (Input.GetKey(forward))
         {
-            rb.AddForce(transform.forward * speed);//try rb.velocity
+            rb.AddForce(transform.forward * speed); //try rb.velocity
             moveFor = true;
         }
         if (Input.GetKeyUp(forward))
@@ -99,12 +100,16 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump() //Jump function, based on distance to the ground
     {
-        if (distGround <= 1.25)
+        if (canJump)
         {
             if (Input.GetKeyDown(jump))
             {
                 rb.AddForce(transform.up * jumpHeight);
-                rb.AddForce(transform.up * jumpGravity);
+                rb.AddForce(transform.up * jumpGravity * Time.deltaTime);
+                if (rb.velocity.y < 0)
+                {
+                    Physics.gravity = new Vector3(0, -15, 0);
+                }
             }
         }
     }
@@ -159,6 +164,22 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.AddForce(transform.right * sprintSpeed);
             }
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Ground"))
+        {
+            canJump = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Ground"))
+        {
+            canJump = false;
         }
     }
 }
