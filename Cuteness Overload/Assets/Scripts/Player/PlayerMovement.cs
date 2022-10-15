@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -15,9 +16,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float jumpGravity = 50f;
     [SerializeField]
+    private float staminaMax = 6000f;
+    [SerializeField]
     private GameObject ground;
     [SerializeField]
     private GameObject FPSCam;
+    [SerializeField]
+    private Text staminaText;
+
+    public float stamina = 6000f;
 
     private Rigidbody rb;
     private Transform player;
@@ -37,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     private bool moveLeft = false;
     private bool moveRight = false;
     private bool canJump = false;
+    private bool isSprinting = false;
 
     private void Start() //Gets the Components needed in the later functions
     {
@@ -53,7 +61,8 @@ public class PlayerMovement : MonoBehaviour
         Rotate();
         Dodge();
         Sprint();
-        Debug.Log("Velocity: " + rb.velocity);
+        StaminaRefill();
+        staminaText.text = stamina.ToString();
     }
 
     public void NormalMove() //Movement function
@@ -122,52 +131,92 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void Dodge() //Dodge function, done by increasing speed
+                        //Also added stamina deducted when dodging
     {
-        if (Input.GetKeyDown(dodge))
+        if (stamina >= 1200)
         {
-            if (moveFor)
+            if (Input.GetKeyDown(dodge))
             {
-                rb.AddForce(transform.forward * dodgeSpeed);
-            }
-            if (moveBack)
-            {
-                rb.AddForce(transform.forward * -dodgeSpeed);
-            }
-            if (moveLeft)
-            {
-                rb.AddForce(transform.right * -dodgeSpeed);
-            }
-            if (moveRight)
-            {
-                rb.AddForce(transform.right * dodgeSpeed);
+                if (moveFor)
+                {
+                    rb.AddForce(transform.forward * dodgeSpeed);
+                    stamina = stamina - 1200;
+                }
+                if (moveBack)
+                {
+                    rb.AddForce(transform.forward * -dodgeSpeed);
+                    stamina = stamina - 1200;
+                }
+                if (moveLeft)
+                {
+                    rb.AddForce(transform.right * -dodgeSpeed);
+                    stamina = stamina - 1200;
+                }
+                if (moveRight)
+                {
+                    rb.AddForce(transform.right * dodgeSpeed);
+                    stamina = stamina - 1200;
+                }
             }
         }
     }
 
     public void Sprint() //Sprint function, done by increasing speed, but not as much as a dodge
+                         //Also has stamina added to decrease whenever sprinting
     {
-        if (Input.GetKey(sprint))
+        if (stamina > 0)
         {
-            if (moveFor)
+            if (Input.GetKey(sprint))
             {
-                rb.AddForce(transform.forward * sprintSpeed);
+                if (moveFor)
+                {
+                    rb.AddForce(transform.forward * sprintSpeed);
+                    isSprinting = true;
+                }
+                if (moveBack)
+                {
+                    rb.AddForce(transform.forward * -sprintSpeed);
+                    isSprinting = true;
+                }
+                if (moveLeft)
+                {
+                    rb.AddForce(transform.right * -sprintSpeed);
+                    isSprinting = true;
+                }
+                if (moveRight)
+                {
+                    rb.AddForce(transform.right * sprintSpeed);
+                    isSprinting = true;
+                }
             }
-            if (moveBack)
+            if (Input.GetKeyUp(sprint))
             {
-                rb.AddForce(transform.forward * -sprintSpeed);
-            }
-            if (moveLeft)
-            {
-                rb.AddForce(transform.right * -sprintSpeed);
-            }
-            if (moveRight)
-            {
-                rb.AddForce(transform.right * sprintSpeed);
+                isSprinting = false;
             }
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void StaminaRefill() //Controls stamina and it refilling
+    {
+        if (stamina < staminaMax && !moveFor && !moveBack && !moveLeft && !moveRight)
+        {
+            stamina = stamina + 2;
+        }
+        if (stamina > staminaMax)
+        {
+            stamina = staminaMax;
+        }
+        if (stamina <= 0)
+        {
+            isSprinting = false;
+        }
+        if (isSprinting)
+        {
+            stamina--;
+        }
+    }
+
+    private void OnCollisionStay(Collision collision) //Makes it so you can jump on anything tagged Ground or Obstacle
     {
         if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Ground"))
         {
