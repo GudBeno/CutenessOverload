@@ -7,7 +7,7 @@ public class BulletManager : MonoBehaviour
     [SerializeField]
     private float bulletspeed = 100f;
     [SerializeField]
-    private float lifeTime = 2f;
+    private float lifeTime = 4f;
 
     private float lifeAlive;
 
@@ -24,6 +24,14 @@ public class BulletManager : MonoBehaviour
         if (lifeAlive <= 0f)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(this.gameObject);
         }
     }
 }

@@ -12,7 +12,11 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField]
     private Transform projSpawn;
     [SerializeField]
-    private GameObject bullet;
+    private GameObject semiautobullet;
+    [SerializeField]
+    private GameObject sniperbullet;
+    [SerializeField]
+    private GameObject shotgunbullet;
     [SerializeField]
     private CinemachineVirtualCamera vcam;
     [SerializeField]
@@ -25,12 +29,21 @@ public class PlayerShoot : MonoBehaviour
 
     private KeyCode reload = KeyCode.R;
 
+    private bool isShotgun = false;
+    private bool isSniper = false;
+    private bool isAssaultRifle = true;
+    private bool isChainsaw = false;
+
+    private Vector3 offset; //Offset random in x and y, stays the same z
+
     public float bulletspeed = 10f;
 
     [SerializeField]
     private Text clipAmmoText;
     [SerializeField]
     private Text storedAmmoText;
+    [SerializeField]
+    private Text gunTypeText;
 
     private void Start() //Locks the cursor to the centre and hides it
     {
@@ -42,6 +55,8 @@ public class PlayerShoot : MonoBehaviour
         FireBullet();
         Aim();
         Reload();
+        ChangeWeapon();
+        GunTypeText();
         Debug.DrawRay(FPSCam.transform.position, FPSCam.transform.forward, Color.magenta);
         clipAmmoText.text = _ammoInClip.ToString();
         storedAmmoText.text = _storedAmmo.ToString();
@@ -53,7 +68,7 @@ public class PlayerShoot : MonoBehaviour
         {
             if (_ammoInClip > 0)
             {
-                GameObject instance = Instantiate(bullet, FPSCam.transform.position, FPSCam.transform.rotation);
+                GameObject instance = Instantiate(semiautobullet, FPSCam.transform.position, FPSCam.transform.rotation);
                 instance.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
                 instance.transform.forward = FPSCam.transform.forward;
                 _ammoInClip--;
@@ -65,11 +80,11 @@ public class PlayerShoot : MonoBehaviour
     {
         if (Input.GetMouseButton(1))
         {
-            vcam.m_Lens.FieldOfView = 40;
+            vcam.m_Lens.FieldOfView = 45;
         }
         if (Input.GetMouseButtonUp(1))
         {
-            vcam.m_Lens.FieldOfView = 60;
+            vcam.m_Lens.FieldOfView = 90;
         }
     }
 
@@ -116,6 +131,158 @@ public class PlayerShoot : MonoBehaviour
             {
                 _storedAmmo = _storedAmmo + ammoCollectable;
             }
+        }
+    }
+
+    public void Shotgun()
+    {
+        if (isShotgun)
+        {
+
+        }
+    }
+
+    public void Sniper()
+    {
+        if (isSniper)
+        {
+
+        }
+    }
+
+    public void AssaultRifle()
+    {
+        if (isAssaultRifle)
+        {
+
+        }
+    }
+
+    public void Chainsaw()
+    {
+        if (isChainsaw)
+        {
+
+        }
+    }
+
+    public void ChangeWeapon()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))//AR
+        {
+            isAssaultRifle = true;
+            isChainsaw = false;
+            isShotgun = false;
+            isSniper = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))//Chainsaw
+        {
+            isChainsaw = true;
+            isAssaultRifle = false;
+            isShotgun = false;
+            isSniper = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))//Shotgun
+        {
+            isShotgun = true;
+            isChainsaw = false;
+            isAssaultRifle = false;
+            isSniper = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))//Sniper
+        {
+            isSniper = true;
+            isShotgun = false;
+            isChainsaw = false;
+            isAssaultRifle = false;
+        }
+        if (isAssaultRifle)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to Sniper
+            {
+                isSniper = true;
+                isAssaultRifle = false;
+                isChainsaw = false;
+                isShotgun = false;
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to Chainsaw
+            {
+                isChainsaw = true;
+                isAssaultRifle = false;
+                isShotgun = false;
+                isSniper = false;
+            }
+        }
+        if (isShotgun)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to Chainsaw
+            {
+                isChainsaw = true;
+                isAssaultRifle = false;
+                isShotgun = false;
+                isSniper = false;
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to Sniper
+            {
+                isSniper = true;
+                isAssaultRifle = false;
+                isChainsaw = false;
+                isShotgun = false;
+            }
+        }
+        if (isSniper)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to Shotgun
+            {
+                isShotgun = true;
+                isAssaultRifle = false;
+                isSniper = false;
+                isChainsaw = false;
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to AR
+            {
+                isAssaultRifle = true;
+                isChainsaw = false;
+                isSniper = false;
+                isShotgun = false;
+            }
+        }
+        if (isChainsaw)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to AR
+            {
+                isAssaultRifle = true;
+                isChainsaw = false;
+                isSniper = false;
+                isShotgun = false;
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to Shotgun
+            {
+                isShotgun = true;
+                isAssaultRifle = false;
+                isSniper = false;
+                isChainsaw = false;
+            }
+        }
+    }
+
+    public void GunTypeText()
+    {
+        if (isAssaultRifle)
+        {
+            gunTypeText.text = "AR";
+        }
+        if (isShotgun)
+        {
+            gunTypeText.text = "Shotgun";
+        }
+        if (isSniper)
+        {
+            gunTypeText.text = "Sniper";
+        }
+        if (isChainsaw)
+        {
+            gunTypeText.text = "Chainsaw";
         }
     }
 

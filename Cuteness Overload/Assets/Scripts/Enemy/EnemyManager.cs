@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public float health = 5;
+    public float health = 30;
+    private float ARDamage = 15;
+    private float SniperDamage = 55;
+    private float ShotgunDamage = 30;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Bullet"))
+        if (other.gameObject.CompareTag("SemiAutoBullet"))
         {
-            health--;
+            health = health - ARDamage;
             Destroy(other);
         }
     }
