@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletManager : MonoBehaviour
+public class ShotGunBullet : MonoBehaviour
 {
     [SerializeField]
-    private float semiAutoSpeed = 500f;
+    private float SGSpeed = 100f;
     [SerializeField]
     private float lifeTime = 4f;
     private Rigidbody rb;
@@ -20,9 +20,9 @@ public class BulletManager : MonoBehaviour
 
     private void Update() //Destroys the bullet after a certain time limit. Also is destroyed if it hits an enemy (in other script)
     {
-        transform.position += transform.forward * semiAutoSpeed * Time.deltaTime;
+        //transform.position += transform.forward * SGSpeed * Time.deltaTime;
 
-        //rb.AddForce(transform.forward * semiAutoSpeed * Time.deltaTime);
+        rb.AddForce(transform.forward * SGSpeed * Time.deltaTime);
 
         lifeAlive -= Time.deltaTime;
         if (lifeAlive <= 0f)

@@ -27,6 +27,26 @@ public class PlayerShoot : MonoBehaviour
     public float _ammoInClip = 10f; //This is the ammo in the clip. Public so it can be used in UI
     public float _storedAmmo = 100f; //This is the ammo stored on the body outside of the clip. Public so it can be used in UI
 
+    [SerializeField]
+    private float sgClipSize = 2f;//Shotgun Amount allowed in Clip
+    [SerializeField]
+    private float sgMaxHeld = 10f;//Shotgun Amount allowed to Store
+    [SerializeField]
+    private float snClipSize = 1f;//Sniper Amount allowed in Clip
+    [SerializeField]
+    private float snMaxHeld = 5f;//Sniper Amount allowed to Store
+    [SerializeField]
+    private float arClipSize = 50f;//AR Amount allowed in Clip
+    [SerializeField]
+    private float arMaxHeld = 100f;//AR Amount allowed to Store
+
+    public float _sgInClip = 2f;//Shotgun amount currently in Clip
+    public float _sgHeld = 10f;//Shotgun amount currently in Store
+    public float _snInClip = 1f;//Sniper amount currently in Clip
+    public float _snHeld = 5f;//Sniper amount currently in Store
+    public float _arInClip = 50f;//AR amount currently in Clip
+    public float _arHeld = 100f;//AR amount currently in Store
+
     private KeyCode reload = KeyCode.R;
 
     private bool isShotgun = false;
@@ -34,7 +54,7 @@ public class PlayerShoot : MonoBehaviour
     private bool isAssaultRifle = true;
     private bool isChainsaw = false;
 
-    private Vector3 offset; //Offset random in x and y, stays the same z
+    private Vector3 offset; 
 
     public float bulletspeed = 10f;
 
@@ -48,18 +68,49 @@ public class PlayerShoot : MonoBehaviour
     private void Start() //Locks the cursor to the centre and hides it
     {
         Cursor.lockState = CursorLockMode.Locked;
+        offset = new Vector3(0, 1.54f, 0);
     }
 
     private void Update() //Runs the functions. Also currently draws a ray where the camera is aiming
     {
-        FireBullet();
+        //FireBullet();
+        Shotgun();
+        Sniper();
+        AssaultRifle();
+        Chainsaw();
         Aim();
-        Reload();
+        //Reload();
         ChangeWeapon();
         GunTypeText();
         Debug.DrawRay(FPSCam.transform.position, FPSCam.transform.forward, Color.magenta);
-        clipAmmoText.text = _ammoInClip.ToString();
-        storedAmmoText.text = _storedAmmo.ToString();
+        AmmoTextChange();
+    }
+
+    public void AmmoTextChange()
+    {
+        //clipAmmoText.text = _ammoInClip.ToString();
+        //storedAmmoText.text = _storedAmmo.ToString();
+
+        if (isShotgun)
+        {
+            clipAmmoText.text = _sgInClip.ToString();
+            storedAmmoText.text = _sgHeld.ToString();
+        }
+        if (isSniper)
+        {
+            clipAmmoText.text = _snInClip.ToString();
+            storedAmmoText.text = _snHeld.ToString();
+        }
+        if (isAssaultRifle)
+        {
+            clipAmmoText.text = _arInClip.ToString();
+            storedAmmoText.text = _arHeld.ToString();
+        }
+        if (isChainsaw)
+        {
+            clipAmmoText.text = "";
+            storedAmmoText.text = "";
+        }
     }
 
     public void FireBullet() //Fires bullet function. 
@@ -117,19 +168,53 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    public void CollectAmmo() //Collect Ammo function. Randomises the amount you collect each time. Has checks so you dont get negative ammo
+    public void CollectARAmmo() //Collect AR Ammo function. Has checks so you dont get negative ammo
     {
-        if(_storedAmmo < maxAmmoStored)
+        if(_arHeld < arMaxHeld)
         {
-            float ammoCollectable = ((float)Math.Round(UnityEngine.Random.Range(10f, 75f), 0));
-            float ammoAllowable = maxAmmoStored - _storedAmmo;
+            float ammoCollectable = 50f;
+            float ammoAllowable = arMaxHeld - _arHeld;
             if(ammoAllowable < ammoCollectable)
             {
-                _storedAmmo = _storedAmmo + ammoAllowable;
+                _arHeld = _arHeld + ammoAllowable;
             }
             else if (ammoAllowable > ammoCollectable)
             {
-                _storedAmmo = _storedAmmo + ammoCollectable;
+                _arHeld = _arHeld + ammoCollectable;
+            }
+        }
+    }
+
+    public void CollectSGAmmo() //Collect Shotgun Ammo function. Has checks so you dont get negative ammo
+    {
+        if (_sgHeld < sgMaxHeld)
+        {
+            float ammoCollectable = 2f;
+            float ammoAllowable = sgMaxHeld - _sgHeld;
+            if (ammoAllowable < ammoCollectable)
+            {
+                _sgHeld = _sgHeld + ammoAllowable;
+            }
+            else if (ammoAllowable > ammoCollectable)
+            {
+                _sgHeld = _sgHeld + ammoCollectable;
+            }
+        }
+    }
+
+    public void CollectSNAmmo() //Collect Sniper Ammo function. Has checks so you dont get negative ammo
+    {
+        if (_snHeld < snMaxHeld)
+        {
+            float ammoCollectable = 1f;
+            float ammoAllowable = snMaxHeld - _snHeld;
+            if (ammoAllowable < ammoCollectable)
+            {
+                _snHeld = _snHeld + ammoAllowable;
+            }
+            else if (ammoAllowable > ammoCollectable)
+            {
+                _snHeld = _snHeld + ammoCollectable;
             }
         }
     }
@@ -138,7 +223,45 @@ public class PlayerShoot : MonoBehaviour
     {
         if (isShotgun)
         {
+            //Shooting
+            if (Input.GetMouseButtonDown(0))
+            {
+                if(_sgInClip > 0)
+                {
+                    GameObject sgBullet = Instantiate(shotgunbullet, FPSCam.transform.position, FPSCam.transform.rotation);
+                    //sgBullet.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
+                    //sgBullet.transform.position = FPSCam.transform.forward;
+                    _sgInClip--;
+                }
+            }
 
+            //Reloading
+            if (Input.GetKeyDown(reload))
+            {
+                if(_sgInClip < sgClipSize && _sgHeld > 0)
+                {
+                    if(_sgHeld < sgClipSize)
+                    {
+                        float reloaded = sgClipSize - _sgInClip;
+                        if (reloaded >= _sgHeld)
+                        {
+                            _sgInClip = _sgInClip + _sgHeld;
+                            _sgHeld = 0;
+                        }
+                        else if (reloaded < _sgHeld)
+                        {
+                            _sgInClip = _sgInClip + reloaded;
+                            _sgHeld = _sgHeld - reloaded;
+                        }
+                    }
+                    else if (_sgHeld >= sgClipSize)
+                    {
+                        float reloaded = sgClipSize - _sgInClip;
+                        _sgInClip = _sgInClip + reloaded;
+                        _sgHeld = _sgHeld - reloaded;
+                    }
+                }
+            }
         }
     }
 
@@ -146,7 +269,45 @@ public class PlayerShoot : MonoBehaviour
     {
         if (isSniper)
         {
+            //Shooting
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (_snInClip > 0)
+                {
+                    GameObject snBullet = Instantiate(sniperbullet, FPSCam.transform.position, FPSCam.transform.rotation);
+                    //snBullet.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
+                    //snBullet.transform.position = FPSCam.transform.forward;
+                    _snInClip--;
+                }
+            }
 
+            //Reloading
+            if (Input.GetKeyDown(reload))
+            {
+                if (_snInClip < snClipSize && _snHeld > 0)
+                {
+                    if (_snHeld < snClipSize)
+                    {
+                        float reloaded = snClipSize - _snInClip;
+                        if (reloaded >= _snHeld)
+                        {
+                            _snInClip = _snInClip + _snHeld;
+                            _snHeld = 0;
+                        }
+                        else if (reloaded < _snHeld)
+                        {
+                            _snInClip = _snInClip + reloaded;
+                            _snHeld = _snHeld - reloaded;
+                        }
+                    }
+                    else if (_snHeld >= snClipSize)
+                    {
+                        float reloaded = snClipSize - _snInClip;
+                        _snInClip = _snInClip + reloaded;
+                        _snHeld = _snHeld - reloaded;
+                    }
+                }
+            }
         }
     }
 
@@ -154,7 +315,45 @@ public class PlayerShoot : MonoBehaviour
     {
         if (isAssaultRifle)
         {
+            //Shooting
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (_arInClip > 0)
+                {
+                    GameObject arBullet = Instantiate(semiautobullet, FPSCam.transform.position, FPSCam.transform.rotation);
+                    //arBullet.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
+                    //arBullet.transform.position = FPSCam.transform.forward;
+                    _arInClip--;
+                }
+            }
 
+            //Reloading
+            if (Input.GetKeyDown(reload))
+            {
+                if (_arInClip < arClipSize && _arHeld > 0)
+                {
+                    if (_arHeld < arClipSize)
+                    {
+                        float reloaded = arClipSize - _arInClip;
+                        if (reloaded >= _arHeld)
+                        {
+                            _arInClip = _arInClip + _arHeld;
+                            _arHeld = 0;
+                        }
+                        else if (reloaded < _arHeld)
+                        {
+                            _arInClip = _arInClip + reloaded;
+                            _arHeld = _arHeld - reloaded;
+                        }
+                    }
+                    else if (_arHeld >= arClipSize)
+                    {
+                        float reloaded = arClipSize - _arInClip;
+                        _arInClip = _arInClip + reloaded;
+                        _arHeld = _arHeld - reloaded;
+                    }
+                }
+            }
         }
     }
 
@@ -288,9 +487,19 @@ public class PlayerShoot : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) //When the player enters the trigger of an Ammo Collectable, runs the CollectAmmo function.
     {
-        if(other.gameObject.CompareTag("AmmoCollectable"))
+        if(other.gameObject.CompareTag("ARAmmoCollectable"))
         {
-            CollectAmmo();
+            CollectARAmmo();
+            other.gameObject.SetActive(false);
+        }
+        if (other.gameObject.CompareTag("ShotgunAmmoCollectable"))
+        {
+            CollectSGAmmo();
+            other.gameObject.SetActive(false);
+        }
+        if (other.gameObject.CompareTag("SniperAmmoCollectable"))
+        {
+            CollectSNAmmo();
             other.gameObject.SetActive(false);
         }
     }
