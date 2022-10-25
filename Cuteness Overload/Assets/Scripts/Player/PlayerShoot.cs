@@ -65,8 +65,17 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField]
     private Text gunTypeText;
 
+    //public enum weapon
+    //{
+    //    ar = 1,
+    //    chainsaw =2,
+    //    shotgun = 3,
+    //    sniper = 4
+    //}
+    //weapon currentWeapon;
     private void Start() //Locks the cursor to the centre and hides it
     {
+       
         Cursor.lockState = CursorLockMode.Locked;
         offset = new Vector3(0, 1.54f, 0);
     }
@@ -412,7 +421,7 @@ public class PlayerShoot : MonoBehaviour
                 isSniper = false;
             }
         }
-        if (isShotgun)
+        else if (isShotgun)
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to Chainsaw
             {
@@ -429,7 +438,7 @@ public class PlayerShoot : MonoBehaviour
                 isShotgun = false;
             }
         }
-        if (isSniper)
+        else if (isSniper)
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to Shotgun
             {
@@ -446,7 +455,7 @@ public class PlayerShoot : MonoBehaviour
                 isShotgun = false;
             }
         }
-        if (isChainsaw)
+        else if (isChainsaw)
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to AR
             {
