@@ -54,7 +54,17 @@ public class PlayerShoot : MonoBehaviour
     private bool isAssaultRifle = true;
     private bool isChainsaw = false;
 
-    private Vector3 offset; 
+    private Vector3 offset;
+
+    private float arElapsed = 0f;
+    private float arDesired = 0.07f;
+
+    private float snReloadElapsed = 0f;
+    private float snReloadDesired = 3f;
+    private float shReloadElapsed = 0f;
+    private float shReloadDesired = 2f;
+    private float arReloadElapsed = 0f;
+    private float arReloadDesired = 1.5f;
 
     public float bulletspeed = 10f;
 
@@ -325,14 +335,23 @@ public class PlayerShoot : MonoBehaviour
         if (isAssaultRifle)
         {
             //Shooting
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
-                if (_arInClip > 0)
+                if (arElapsed <= arDesired) 
                 {
-                    GameObject arBullet = Instantiate(semiautobullet, FPSCam.transform.position, FPSCam.transform.rotation);
-                    //arBullet.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
-                    //arBullet.transform.position = FPSCam.transform.forward;
-                    _arInClip--;
+
+                    arElapsed += Time.deltaTime;
+                }
+                else { 
+                    
+                    if (_arInClip > 0)
+                    {
+                        GameObject arBullet = Instantiate(semiautobullet, FPSCam.transform.position, FPSCam.transform.rotation);
+                        //arBullet.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
+                        //arBullet.transform.position = FPSCam.transform.forward;
+                        _arInClip--;
+                    }
+                    arElapsed = 0;
                 }
             }
 
