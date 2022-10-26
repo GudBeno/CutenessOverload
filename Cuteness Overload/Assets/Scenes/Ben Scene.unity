@@ -1555,6 +1555,10 @@ PrefabInstance:
       propertyPath: healthText
       value: 
       objectReference: {fileID: 495559850}
+    - target: {fileID: 4424976722637659159, guid: 8f0565fa34e51574ba46e7c249ccba6c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5000565524551797820, guid: 8f0565fa34e51574ba46e7c249ccba6c, type: 3}
       propertyPath: m_RootOrder
       value: 6

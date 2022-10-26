@@ -31,6 +31,103 @@ Transform:
   m_Father: {fileID: 5000565524551797820}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &4424976722637659159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1161791045460471570}
+  - component: {fileID: 2274600044453291889}
+  - component: {fileID: 854558754498191614}
+  - component: {fileID: 5626033858097535776}
+  m_Layer: 0
+  m_Name: ChainsawTemp
+  m_TagString: Chainsaw
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1161791045460471570
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4424976722637659159}
+  m_LocalRotation: {x: -0.25233445, y: -0, z: -0, w: 0.96764016}
+  m_LocalPosition: {x: 0.514, y: 0.23000002, z: 0.75}
+  m_LocalScale: {x: 0.1, y: 0.10000001, z: 0.70000005}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5000565524551797820}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: -29.231, y: 0, z: 0}
+--- !u!33 &2274600044453291889
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4424976722637659159}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &854558754498191614
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4424976722637659159}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5626033858097535776
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4424976722637659159}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5000565524366684831
 GameObject:
   m_ObjectHideFlags: 0
@@ -99,6 +196,7 @@ Transform:
   m_Children:
   - {fileID: 5000565524366684828}
   - {fileID: 8934736774065059058}
+  - {fileID: 1161791045460471570}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -221,11 +319,24 @@ MonoBehaviour:
   semiautobullet: {fileID: 8852395931016358533, guid: 19a03b933605a1247be89aa03b1015e0, type: 3}
   sniperbullet: {fileID: 9047812760005288061, guid: eaaf445fff2bd8f43b55fc2535fa762a, type: 3}
   shotgunbullet: {fileID: 3008242906714370360, guid: 5cf0502368e1c484aa4d7e36731af02d, type: 3}
+  chainsaw: {fileID: 4424976722637659159}
   vcam: {fileID: 0}
   allowedAmmo: 10
   maxAmmoStored: 100
   _ammoInClip: 10
   _storedAmmo: 100
+  sgClipSize: 2
+  sgMaxHeld: 10
+  snClipSize: 1
+  snMaxHeld: 5
+  arClipSize: 50
+  arMaxHeld: 100
+  _sgInClip: 2
+  _sgHeld: 10
+  _snInClip: 1
+  _snHeld: 5
+  _arInClip: 50
+  _arHeld: 100
   bulletspeed: 100
   clipAmmoText: {fileID: 0}
   storedAmmoText: {fileID: 0}

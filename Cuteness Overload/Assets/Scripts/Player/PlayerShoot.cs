@@ -18,6 +18,8 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField]
     private GameObject shotgunbullet;
     [SerializeField]
+    private GameObject chainsaw;
+    [SerializeField]
     private CinemachineVirtualCamera vcam;
     [SerializeField]
     private float allowedAmmo = 10f; //This is the size of the magazine clip, the amount of ammo the gun can store at one time
@@ -85,7 +87,7 @@ public class PlayerShoot : MonoBehaviour
     //weapon currentWeapon;
     private void Start() //Locks the cursor to the centre and hides it
     {
-       
+        chainsaw.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         offset = new Vector3(0, 1.54f, 0);
     }
@@ -237,6 +239,33 @@ public class PlayerShoot : MonoBehaviour
             }
         }
     }
+    //IEnumerator reloadCoRoutine(float reloadTime,float ammoReference,float maxAmmo)
+    //{
+    //    float desiredTime = reloadTime;
+    //    float elapsedTime = 0;
+    //    while (elapsedTime < desiredTime)
+    //    {
+    //        elapsedTime += Time.deltaTime;
+    //        yield return null;
+    //    }
+    //    ammoReference = maxAmmo;
+    //    yield return null;
+    //}
+
+    IEnumerator ShotgunReloadTime()
+    {
+        yield return new WaitForSeconds(shReloadDesired);
+    }
+
+    IEnumerator SniperReloadTime()
+    {
+        yield return new WaitForSeconds(snReloadDesired);
+    }
+
+    IEnumerator ARReloadTime()
+    {
+        yield return new WaitForSeconds(arReloadDesired);
+    }
 
     public void Shotgun()
     {
@@ -257,9 +286,11 @@ public class PlayerShoot : MonoBehaviour
             //Reloading
             if (Input.GetKeyDown(reload))
             {
-                if(_sgInClip < sgClipSize && _sgHeld > 0)
+                StartCoroutine(ShotgunReloadTime());
+
+                if (_sgInClip < sgClipSize && _sgHeld > 0)
                 {
-                    if(_sgHeld < sgClipSize)
+                    if (_sgHeld < sgClipSize)
                     {
                         float reloaded = sgClipSize - _sgInClip;
                         if (reloaded >= _sgHeld)
@@ -303,6 +334,7 @@ public class PlayerShoot : MonoBehaviour
             //Reloading
             if (Input.GetKeyDown(reload))
             {
+                StartCoroutine(SniperReloadTime());
                 if (_snInClip < snClipSize && _snHeld > 0)
                 {
                     if (_snHeld < snClipSize)
@@ -358,6 +390,7 @@ public class PlayerShoot : MonoBehaviour
             //Reloading
             if (Input.GetKeyDown(reload))
             {
+                StartCoroutine(ARReloadTime());
                 if (_arInClip < arClipSize && _arHeld > 0)
                 {
                     if (_arHeld < arClipSize)
@@ -389,7 +422,11 @@ public class PlayerShoot : MonoBehaviour
     {
         if (isChainsaw)
         {
-
+            chainsaw.SetActive(true);
+        }
+        else if (!isChainsaw)
+        {
+            chainsaw.SetActive(false);
         }
     }
 

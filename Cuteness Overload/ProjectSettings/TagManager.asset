@@ -15,6 +15,7 @@ TagManager:
   - SniperAmmoCollectable
   - ShotgunAmmoCollectable
   - ARAmmoCollectable
+  - Chainsaw
   layers:
   - Default
   - TransparentFX

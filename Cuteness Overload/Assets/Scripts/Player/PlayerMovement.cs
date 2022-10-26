@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
         Sprint();
         StaminaRefill();
         staminaText.text = stamina.ToString();
+        Debug.Log("Sprinting: " + isSprinting);
     }
 
     public void NormalMove() //Movement function
@@ -198,9 +199,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void StaminaRefill() //Controls stamina and it refilling
     {
-        if (stamina < staminaMax && !moveFor && !moveBack && !moveLeft && !moveRight)
+        if (isSprinting == false)
         {
-            stamina = stamina + 2;
+            if (stamina < staminaMax)
+            {
+                stamina = stamina + 2;
+            }
         }
         if (stamina > staminaMax)
         {
