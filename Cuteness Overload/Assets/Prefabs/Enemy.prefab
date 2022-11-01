@@ -113,6 +113,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 45
+  arAmmoCollect: {fileID: 424440170136908605, guid: b106a45e2b1ca12459e89e2f6154255e, type: 3}
+  snAmmoCollect: {fileID: 424440170136908605, guid: 015881598c98a3342a396514d89e58f6, type: 3}
+  shAmmoCollect: {fileID: 424440170136908605, guid: c4399c81e7f70e74e99554aca51b605c, type: 3}
+  healthCollect: {fileID: 6811007324017903153, guid: 4e987427b1f769940bab610cffbc49ae, type: 3}
   player: {fileID: 0}
 --- !u!195 &1833619521
 NavMeshAgent:

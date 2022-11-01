@@ -335,6 +335,7 @@ public class PlayerShoot : MonoBehaviour
             if (Input.GetKeyDown(reload))
             {
                 StartCoroutine(SniperReloadTime());
+
                 if (_snInClip < snClipSize && _snHeld > 0)
                 {
                     if (_snHeld < snClipSize)

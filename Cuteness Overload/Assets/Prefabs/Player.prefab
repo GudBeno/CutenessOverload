@@ -49,7 +49,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1161791045460471570
 Transform:
   m_ObjectHideFlags: 0
@@ -353,6 +353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2640356b40340449a247e809252dec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: 8
+  playerHealth: 10
   maxPlayerHealth: 10
   healthText: {fileID: 0}

@@ -63,7 +63,6 @@ public class PlayerMovement : MonoBehaviour
         Sprint();
         StaminaRefill();
         staminaText.text = stamina.ToString();
-        Debug.Log("Sprinting: " + isSprinting);
     }
 
     public void NormalMove() //Movement function

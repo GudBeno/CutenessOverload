@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerDamage : MonoBehaviour
 {
-    public float playerHealth = 8f; //This is the player's current health value
+    public float playerHealth = 10f; //This is the player's current health value
 
     [SerializeField]
     private float maxPlayerHealth = 10f; //This is the max amount of health the player can have
