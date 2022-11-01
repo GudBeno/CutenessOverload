@@ -20,14 +20,17 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private GameObject healthCollect;
 
-    [SerializeField]
-    private Transform player;
+    private Transform playerTransform;
+    private GameObject player;
+
     private NavMeshAgent agent;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         randomDrop = Random.Range(1, 4);
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerTransform = player.GetComponent<Transform>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,7 +58,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
-        agent.destination = player.position;
+        agent.destination = playerTransform.position;
         if(health <= 0)
         {
             Destroy(gameObject);

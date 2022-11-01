@@ -20,6 +20,12 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField]
     private GameObject chainsaw;
     [SerializeField]
+    private GameObject sniperObject;
+    [SerializeField]
+    private GameObject shotgunObject;
+    [SerializeField]
+    private GameObject arObject;
+    [SerializeField]
     private CinemachineVirtualCamera vcam;
     [SerializeField]
     private float allowedAmmo = 10f; //This is the size of the magazine clip, the amount of ammo the gun can store at one time
@@ -88,6 +94,9 @@ public class PlayerShoot : MonoBehaviour
     private void Start() //Locks the cursor to the centre and hides it
     {
         chainsaw.SetActive(false);
+        sniperObject.SetActive(false);
+        shotgunObject.SetActive(false);
+        arObject.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
         offset = new Vector3(0, 1.54f, 0);
     }
@@ -271,6 +280,10 @@ public class PlayerShoot : MonoBehaviour
     {
         if (isShotgun)
         {
+            shotgunObject.SetActive(true);
+            sniperObject.SetActive(false);
+            arObject.SetActive(false);
+            chainsaw.SetActive(false);
             //Shooting
             if (Input.GetMouseButtonDown(0))
             {
@@ -319,6 +332,10 @@ public class PlayerShoot : MonoBehaviour
     {
         if (isSniper)
         {
+            sniperObject.SetActive(true);
+            shotgunObject.SetActive(false);
+            arObject.SetActive(false);
+            chainsaw.SetActive(false);
             //Shooting
             if (Input.GetMouseButtonDown(0))
             {
@@ -367,6 +384,10 @@ public class PlayerShoot : MonoBehaviour
     {
         if (isAssaultRifle)
         {
+            arObject.SetActive(true);
+            shotgunObject.SetActive(false);
+            sniperObject.SetActive(false);
+            chainsaw.SetActive(false);
             //Shooting
             if (Input.GetMouseButton(0))
             {
@@ -424,10 +445,9 @@ public class PlayerShoot : MonoBehaviour
         if (isChainsaw)
         {
             chainsaw.SetActive(true);
-        }
-        else if (!isChainsaw)
-        {
-            chainsaw.SetActive(false);
+            sniperObject.SetActive(false);
+            shotgunObject.SetActive(false);
+            arObject.SetActive(false);
         }
     }
 

@@ -13,8 +13,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private Transform spawn4;
     [SerializeField]
-    private GameObject player;
-    [SerializeField]
     private GameObject enemy;
     [SerializeField]
     private float waitTime = 3f;
@@ -56,9 +54,27 @@ public class SpawnManager : MonoBehaviour
     {
         for (int i = 0; i <= numSpawns; i++)
         {
-            spawnNum = Random.Range(1, 5);
-            StartCoroutine(SpawnWait());
-            Instantiate(enemy, spawns[spawnNum].transform.position, spawns[spawnNum].transform.rotation);
+            spawnNum = Random.Range(0, 3);
+            if (spawnNum == 0)
+            {
+                StartCoroutine(SpawnWait());
+                Instantiate(enemy, spawn1.transform.position, spawn1.transform.rotation);
+            }
+            if(spawnNum == 1)
+            {
+                StartCoroutine(SpawnWait());
+                Instantiate(enemy, spawn2.transform.position, spawn2.transform.rotation);
+            }
+            if (spawnNum == 2)
+            {
+                StartCoroutine(SpawnWait());
+                Instantiate(enemy, spawn3.transform.position, spawn3.transform.rotation);
+            }
+            if (spawnNum == 3)
+            {
+                StartCoroutine(SpawnWait());
+                Instantiate(enemy, spawn4.transform.position, spawn4.transform.rotation);
+            }
         }
     }
 
