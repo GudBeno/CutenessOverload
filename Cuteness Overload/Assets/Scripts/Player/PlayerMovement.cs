@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         Dodge();
         Sprint();
         StaminaRefill();
-        staminaText.text = stamina.ToString();
+       // staminaText.text = stamina.ToString();
     }
 
     public void NormalMove() //Movement function

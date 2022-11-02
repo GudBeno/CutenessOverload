@@ -57,10 +57,10 @@ public class PlayerShoot : MonoBehaviour
 
     private KeyCode reload = KeyCode.R;
 
-    private bool isShotgun = false;
-    private bool isSniper = false;
-    private bool isAssaultRifle = true;
-    private bool isChainsaw = false;
+    public bool isShotgun = false;
+    public bool isSniper = false;
+    public bool isAssaultRifle = true;
+    public bool isChainsaw = false;
 
     private Vector3 offset;
 
