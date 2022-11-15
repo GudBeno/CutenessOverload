@@ -159,13 +159,38 @@ public class PlayerShoot : MonoBehaviour
 
     public void Aim() //Aiming in function, done by changing the FOV
     {
-        if (Input.GetMouseButton(1))
+        if (isSniper)
         {
-            vcam.m_Lens.FieldOfView = 45;
+            if (Input.GetMouseButton(1))
+            {
+                vcam.m_Lens.FieldOfView = 45;
+            }
+            if (Input.GetMouseButtonUp(1))
+            {
+                vcam.m_Lens.FieldOfView = 90;
+            }
         }
-        if (Input.GetMouseButtonUp(1))
+        if (isShotgun)
         {
-            vcam.m_Lens.FieldOfView = 90;
+            if (Input.GetMouseButton(1))
+            {
+                vcam.m_Lens.FieldOfView = 60;
+            }
+            if (Input.GetMouseButtonUp(1))
+            {
+                vcam.m_Lens.FieldOfView = 90;
+            }
+        }
+        if (isAssaultRifle)
+        {
+            if (Input.GetMouseButton(1))
+            {
+                vcam.m_Lens.FieldOfView = 52;
+            }
+            if (Input.GetMouseButtonUp(1))
+            {
+                vcam.m_Lens.FieldOfView = 90;
+            }
         }
     }
 

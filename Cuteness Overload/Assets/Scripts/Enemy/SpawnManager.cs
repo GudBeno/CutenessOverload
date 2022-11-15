@@ -15,18 +15,23 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject enemy;
     [SerializeField]
+    private GameObject bee;
+    [SerializeField]
     private float waitTime = 3f;
 
     private int spawnNum = 1;
     private GameObject[] enemies;
+    private GameObject[] bees;
     private GameObject[] spawns = new GameObject[4];
     private int numEnemies;
+    private int numBees;
     private int numSpawns = 0;
     private float timer = 0f;
 
     private void Start()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        bees = GameObject.FindGameObjectsWithTag("BeeEnemy");
     }
 
     private void Update()
@@ -37,13 +42,14 @@ public class SpawnManager : MonoBehaviour
             if (timer >= waitTime)
             {
                 SpawnEnemy();
-                if (numSpawns <= 15)
+                SpawnBee();
+                if (numSpawns <= 20)
                 {
                     numSpawns++;
                 }
-                else if (numSpawns >= 16)
+                else if (numSpawns >= 21)
                 {
-                    numSpawns = 15;
+                    numSpawns = 20;
                 }
                 timer = 0;
             }
@@ -74,6 +80,37 @@ public class SpawnManager : MonoBehaviour
             {
                 StartCoroutine(SpawnWait());
                 Instantiate(enemy, spawn4.transform.position, spawn4.transform.rotation);
+            }
+        }
+    }
+
+    public void SpawnBee()
+    {
+        if (numSpawns >= 7)
+        {
+            for (int i = 0; i <= (numSpawns - 6); i++)
+            {
+                spawnNum = Random.Range(0, 3);
+                if (spawnNum == 0)
+                {
+                    StartCoroutine(SpawnWait());
+                    Instantiate(bee, spawn1.transform.position, spawn1.transform.rotation);
+                }
+                if (spawnNum == 1)
+                {
+                    StartCoroutine(SpawnWait());
+                    Instantiate(bee, spawn2.transform.position, spawn2.transform.rotation);
+                }
+                if (spawnNum == 2)
+                {
+                    StartCoroutine(SpawnWait());
+                    Instantiate(bee, spawn3.transform.position, spawn3.transform.rotation);
+                }
+                if (spawnNum == 3)
+                {
+                    StartCoroutine(SpawnWait());
+                    Instantiate(bee, spawn4.transform.position, spawn4.transform.rotation);
+                }
             }
         }
     }
