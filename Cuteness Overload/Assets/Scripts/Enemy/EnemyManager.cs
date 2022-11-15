@@ -61,7 +61,7 @@ public class EnemyManager : MonoBehaviour
             health = health - ShotgunDamage;
             Destroy(other);
         }
-        if (other.gameObject.CompareTag("Chainsaw") && Input.GetMouseButtonDown(0))
+        if (other.gameObject.CompareTag("Chainsaw") && Input.GetMouseButton(0))
         {
             health = 0;
         }
