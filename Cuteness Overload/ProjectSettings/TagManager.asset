@@ -16,6 +16,7 @@ TagManager:
   - ShotgunAmmoCollectable
   - ARAmmoCollectable
   - Chainsaw
+  - Gun
   layers:
   - Default
   - TransparentFX

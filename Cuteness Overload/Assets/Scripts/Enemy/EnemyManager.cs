@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyManager : MonoBehaviour
 {
-    public float health = 45f;
+    private float health;
     private float ARDamage = 10f;
     private float SniperDamage = 55f;
     private float ShotgunDamage = 45f;
@@ -24,6 +24,7 @@ public class EnemyManager : MonoBehaviour
     private GameObject player;
 
     private NavMeshAgent agent;
+    private float distanceBee;
 
     private void Start()
     {
@@ -31,6 +32,15 @@ public class EnemyManager : MonoBehaviour
         randomDrop = Random.Range(1, 4);
         player = GameObject.FindGameObjectWithTag("Player");
         playerTransform = player.GetComponent<Transform>();
+
+        if (this.gameObject.CompareTag("Enemy"))
+        {
+            health = 45f;
+        }
+        if (this.gameObject.CompareTag("BeeEnemy"))
+        {
+            health = 10f;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,10 +69,12 @@ public class EnemyManager : MonoBehaviour
     private void Update()
     {
         agent.destination = playerTransform.position;
+        Bee();
         if(health <= 0)
         {
             Destroy(gameObject);
         }
+        distanceBee = Vector3.Distance(this.transform.position, player.transform.position);
     }
 
     private void OnDestroy()
@@ -74,19 +86,30 @@ public class EnemyManager : MonoBehaviour
     {
         if(randomDrop == 1)
         {
-            Instantiate(healthCollect, this.transform.position, this.transform.rotation);
+            Instantiate(healthCollect, new Vector3(this.transform.position.x, 0.5f, this.transform.position.z), this.transform.rotation);
         }
         if(randomDrop == 2)
         {
-            Instantiate(arAmmoCollect, this.transform.position, this.transform.rotation);
+            Instantiate(arAmmoCollect, new Vector3(this.transform.position.x, 0.5f, this.transform.position.z), this.transform.rotation);
         }
         if(randomDrop == 3)
         {
-            Instantiate(snAmmoCollect, this.transform.position, this.transform.rotation);
+            Instantiate(snAmmoCollect, new Vector3(this.transform.position.x, 0.5f, this.transform.position.z), this.transform.rotation);
         }
         if(randomDrop == 4)
         {
-            Instantiate(shAmmoCollect, this.transform.position, this.transform.rotation);
+            Instantiate(shAmmoCollect, new Vector3(this.transform.position.x, 0.5f, this.transform.position.z), this.transform.rotation);
+        }
+    }
+
+    public void Bee()
+    {
+        if (this.gameObject.CompareTag("BeeEnemy"))
+        {
+            if(distanceBee <= 5f)
+            {
+                transform.position = new Vector3(transform.position.x, 2f, transform.position.z);
+            }
         }
     }
 }
