@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class EnemyManager : MonoBehaviour
 {
     private float health;
-    private float ARDamage = 10f;
+    private float ARDamage = 15f;
     private float SniperDamage = 55f;
     private float ShotgunDamage = 45f;
     private int randomDrop;
@@ -25,6 +25,7 @@ public class EnemyManager : MonoBehaviour
 
     private NavMeshAgent agent;
     private float distanceBee;
+    private float distance;
 
     private void Start()
     {
@@ -70,11 +71,13 @@ public class EnemyManager : MonoBehaviour
     {
         agent.destination = playerTransform.position;
         Bee();
+        WakingUp();
         if(health <= 0)
         {
             Destroy(gameObject);
         }
         distanceBee = Vector3.Distance(this.transform.position, player.transform.position);
+        distance = Vector3.Distance(this.transform.position, player.transform.position);
     }
 
     private void OnDestroy()
@@ -110,6 +113,18 @@ public class EnemyManager : MonoBehaviour
             {
                 transform.position = new Vector3(transform.position.x, 2f, transform.position.z);
             }
+        }
+    }
+
+    public void WakingUp()
+    {
+        if(distance >= 20)
+        {
+            GetComponent<NavMeshAgent>().speed = 0f;
+        }
+        else
+        {
+            GetComponent<NavMeshAgent>().speed = 5f;
         }
     }
 }
