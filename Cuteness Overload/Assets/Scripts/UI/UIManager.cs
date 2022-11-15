@@ -24,12 +24,12 @@ public class UIManager : MonoBehaviour
 
     public void Controls()
     {
-        if (Input.GetKey(KeyCode.Equals))
+        if (Input.GetKey(KeyCode.Escape))
         {
             ControlPanel.SetActive(true);
             Time.timeScale = 0;
         }
-        if (Input.GetKey(KeyCode.Backspace))
+        if (Input.GetKey(KeyCode.KeypadEnter))
         {
             ControlPanel.SetActive(false);
             Time.timeScale = 1;

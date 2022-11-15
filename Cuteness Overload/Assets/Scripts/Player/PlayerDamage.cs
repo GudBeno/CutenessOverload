@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerDamage : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class PlayerDamage : MonoBehaviour
     private void Update()
     {
         healthText.text = playerHealth.ToString();
+        if(playerHealth <= 0)
+        {
+            SceneManager.LoadScene("End");
+        }
     }
 
     private void OnTriggerEnter(Collider other) //This runs when entering a health collectable. Runs the Collect Health function
@@ -29,7 +34,7 @@ public class PlayerDamage : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("BeeEnemy"))
         {
             TakeDamage();
         }
