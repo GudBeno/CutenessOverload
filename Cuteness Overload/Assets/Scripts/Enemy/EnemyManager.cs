@@ -10,6 +10,7 @@ public class EnemyManager : MonoBehaviour
     private float SniperDamage = 55f;
     private float ShotgunDamage = 45f;
     private int randomDrop;
+    public GameObject explosion;
 
     [SerializeField]
     private GameObject arAmmoCollect;
@@ -34,7 +35,7 @@ public class EnemyManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerTransform = player.GetComponent<Transform>();
 
-        if (this.gameObject.CompareTag("Enemy"))
+        if (this.gameObject.CompareTag("Bearnemy"))
         {
             health = 45f;
         }
@@ -82,6 +83,10 @@ public class EnemyManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (this.gameObject.CompareTag("Bearnemy"))
+        {
+            Instantiate(explosion, new Vector3(this.transform.position.x, 0.5f, this.transform.position.z), this.transform.rotation);
+        }
         SpawnRandom();
     }
 

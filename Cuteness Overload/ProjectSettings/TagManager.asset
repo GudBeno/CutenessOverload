@@ -18,6 +18,7 @@ TagManager:
   - Chainsaw
   - Gun
   - BeeEnemy
+  - Bearnemy
   layers:
   - Default
   - TransparentFX
