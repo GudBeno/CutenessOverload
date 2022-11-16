@@ -19,6 +19,7 @@ TagManager:
   - Gun
   - BeeEnemy
   - Bearnemy
+  - gamecontroller
   layers:
   - Default
   - TransparentFX
@@ -29,8 +30,8 @@ TagManager:
   - guns
   - follow cam
   - guns cam
-  - 
-  - 
+  - Character
+  - Character Collision Blocker
   - 
   - 
   - 
