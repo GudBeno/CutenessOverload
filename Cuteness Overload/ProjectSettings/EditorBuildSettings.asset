@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Ben Scene.unity
     guid: 6783eee729b17b54680ca172864abffb
+  - enabled: 1
+    path: Assets/Scenes/levels/Level 1.unity
+    guid: bd2dfd57dbca4d442b06cc0d3cd2074b
   m_configObjects: {}
