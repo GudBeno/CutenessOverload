@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class PlayerShoot : MonoBehaviour
 {
     [SerializeField]
-    private GameObject FPSCam;
+    private Camera FPSCam;
+    public GameObject guncam;
     [SerializeField]
     private Transform projSpawn;
     [SerializeField]
@@ -62,17 +63,20 @@ public class PlayerShoot : MonoBehaviour
     public bool isAssaultRifle = true;
     public bool isChainsaw = false;
 
+    bool canshoot = true;
+    bool iscooping = false;
+
     private Vector3 offset;
 
     private float arElapsed = 0f;
     private float arDesired = 0.07f;
 
     private float snReloadElapsed = 0f;
-    private float snReloadDesired = 3f;
+    private float snReloadDesired = 0.7f;
     private float shReloadElapsed = 0f;
     private float shReloadDesired = 2f;
     private float arReloadElapsed = 0f;
-    private float arReloadDesired = 1.5f;
+    private float arReloadDesired = 0.9f;
 
     public float bulletspeed = 10f;
 
@@ -82,6 +86,11 @@ public class PlayerShoot : MonoBehaviour
     private Text storedAmmoText;
     [SerializeField]
     private Text gunTypeText;
+    public Image crosshair, scoped;
+
+    public Animator chainsawanim, sniperanim, shotgunanim, aranim;
+
+    public bool death = false;
 
     //public enum weapon
     //{
@@ -93,6 +102,7 @@ public class PlayerShoot : MonoBehaviour
     //weapon currentWeapon;
     private void Start() //Locks the cursor to the centre and hides it
     {
+        scoped.enabled = false;
         chainsaw.SetActive(false);
         sniperObject.SetActive(false);
         shotgunObject.SetActive(false);
@@ -103,17 +113,21 @@ public class PlayerShoot : MonoBehaviour
 
     private void Update() //Runs the functions. Also currently draws a ray where the camera is aiming
     {
-        //FireBullet();
-        Shotgun();
-        Sniper();
-        AssaultRifle();
-        Chainsaw();
-        Aim();
-        //Reload();
-        ChangeWeapon();
-        GunTypeText();
-        Debug.DrawRay(FPSCam.transform.position, FPSCam.transform.forward, Color.magenta);
-        AmmoTextChange();
+        if (death == false)
+        {
+            //FireBullet();
+            Shotgun();
+            Sniper();
+            AssaultRifle();
+            Chainsaw();
+            Aim();
+            //Reload();
+            ChangeWeapon();
+            GunTypeText();
+            Debug.DrawRay(FPSCam.transform.position, FPSCam.transform.forward, Color.magenta);
+            AmmoTextChange();
+        }
+
     }
 
     public void AmmoTextChange()
@@ -164,28 +178,6 @@ public class PlayerShoot : MonoBehaviour
             if (Input.GetMouseButton(1))
             {
                 vcam.m_Lens.FieldOfView = 45;
-            }
-            if (Input.GetMouseButtonUp(1))
-            {
-                vcam.m_Lens.FieldOfView = 90;
-            }
-        }
-        if (isShotgun)
-        {
-            if (Input.GetMouseButton(1))
-            {
-                vcam.m_Lens.FieldOfView = 60;
-            }
-            if (Input.GetMouseButtonUp(1))
-            {
-                vcam.m_Lens.FieldOfView = 90;
-            }
-        }
-        if (isAssaultRifle)
-        {
-            if (Input.GetMouseButton(1))
-            {
-                vcam.m_Lens.FieldOfView = 52;
             }
             if (Input.GetMouseButtonUp(1))
             {
@@ -288,67 +280,133 @@ public class PlayerShoot : MonoBehaviour
 
     IEnumerator ShotgunReloadTime()
     {
+        canshoot = false;
+        shotgunanim.Play("shotgun_reload");
         yield return new WaitForSeconds(shReloadDesired);
+        shotgunanim.Play("shotgun_default");
+        if (_sgInClip < sgClipSize && _sgHeld > 0)
+        {
+            if (_sgHeld < sgClipSize)
+            {
+                float reloaded = sgClipSize - _sgInClip;
+                if (reloaded >= _sgHeld)
+                {
+                    _sgInClip = _sgInClip + _sgHeld;
+                    _sgHeld = 0;
+                }
+                else if (reloaded < _sgHeld)
+                {
+                    _sgInClip = _sgInClip + reloaded;
+                    _sgHeld = _sgHeld - reloaded;
+                }
+            }
+            else if (_sgHeld >= sgClipSize)
+            {
+                float reloaded = sgClipSize - _sgInClip;
+                _sgInClip = _sgInClip + reloaded;
+                _sgHeld = _sgHeld - reloaded;
+            }
+        }
+        canshoot = true;
+
     }
 
     IEnumerator SniperReloadTime()
     {
+        canshoot = false;
+        sniperanim.Play("sniper_reload");
         yield return new WaitForSeconds(snReloadDesired);
+        sniperanim.Play("sniper_default");
+        if (_snInClip < snClipSize && _snHeld > 0)
+        {
+            if (_snHeld < snClipSize)
+            {
+                float reloaded = snClipSize - _snInClip;
+                if (reloaded >= _snHeld)
+                {
+                    _snInClip = _snInClip + _snHeld;
+                    _snHeld = 0;
+                }
+                else if (reloaded < _snHeld)
+                {
+                    _snInClip = _snInClip + reloaded;
+                    _snHeld = _snHeld - reloaded;
+                }
+            }
+            else if (_snHeld >= snClipSize)
+            {
+                float reloaded = snClipSize - _snInClip;
+                _snInClip = _snInClip + reloaded;
+                _snHeld = _snHeld - reloaded;
+            }
+        }
+        canshoot = true;
     }
 
     IEnumerator ARReloadTime()
     {
+        canshoot = false;
+        aranim.Play("AR_reload");
         yield return new WaitForSeconds(arReloadDesired);
+        aranim.Play("AR_default");
+        if (_arInClip < arClipSize && _arHeld > 0)
+        {
+            if (_arHeld < arClipSize)
+            {
+                float reloaded = arClipSize - _arInClip;
+                if (reloaded >= _arHeld)
+                {
+                    _arInClip = _arInClip + _arHeld;
+                    _arHeld = 0;
+                }
+                else if (reloaded < _arHeld)
+                {
+                    _arInClip = _arInClip + reloaded;
+                    _arHeld = _arHeld - reloaded;
+                }
+            }
+            else if (_arHeld >= arClipSize)
+            {
+                float reloaded = arClipSize - _arInClip;
+                _arInClip = _arInClip + reloaded;
+                _arHeld = _arHeld - reloaded;
+            }
+        }
+        canshoot = true;
     }
 
     public void Shotgun()
     {
         if (isShotgun)
         {
+            crosshair.enabled = true;
             shotgunObject.SetActive(true);
             sniperObject.SetActive(false);
             arObject.SetActive(false);
             chainsaw.SetActive(false);
             //Shooting
-            if (Input.GetMouseButtonDown(0))
+            if (canshoot)
             {
-                if(_sgInClip > 0)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    GameObject sgBullet = Instantiate(shotgunbullet, FPSCam.transform.position, FPSCam.transform.rotation);
-                    //sgBullet.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
-                    //sgBullet.transform.position = FPSCam.transform.forward;
-                    _sgInClip--;
+
+                    if (_sgInClip > 0)
+                    {
+                        StartCoroutine(shotgunshoot());
+                        //sgBullet.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
+                        //sgBullet.transform.position = FPSCam.transform.forward;
+                        //_sgInClip--;
+                    }
+                }
+                else
+                {
+                    shotgunanim.Play("shotgun_default");
                 }
             }
-
             //Reloading
-            if (Input.GetKeyDown(reload))
+            if (Input.GetKey(reload))
             {
-                StartCoroutine(ShotgunReloadTime());
-
-                if (_sgInClip < sgClipSize && _sgHeld > 0)
-                {
-                    if (_sgHeld < sgClipSize)
-                    {
-                        float reloaded = sgClipSize - _sgInClip;
-                        if (reloaded >= _sgHeld)
-                        {
-                            _sgInClip = _sgInClip + _sgHeld;
-                            _sgHeld = 0;
-                        }
-                        else if (reloaded < _sgHeld)
-                        {
-                            _sgInClip = _sgInClip + reloaded;
-                            _sgHeld = _sgHeld - reloaded;
-                        }
-                    }
-                    else if (_sgHeld >= sgClipSize)
-                    {
-                        float reloaded = sgClipSize - _sgInClip;
-                        _sgInClip = _sgInClip + reloaded;
-                        _sgHeld = _sgHeld - reloaded;
-                    }
-                }
+                StartCoroutine(ShotgunReloadTime());           
             }
         }
     }
@@ -357,48 +415,58 @@ public class PlayerShoot : MonoBehaviour
     {
         if (isSniper)
         {
+            crosshair.enabled = false;
             sniperObject.SetActive(true);
             shotgunObject.SetActive(false);
             arObject.SetActive(false);
             chainsaw.SetActive(false);
             //Shooting
-            if (Input.GetMouseButtonDown(0))
+            if (canshoot)
             {
-                if (_snInClip > 0)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    GameObject snBullet = Instantiate(sniperbullet, FPSCam.transform.position, FPSCam.transform.rotation);
-                    //snBullet.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
-                    //snBullet.transform.position = FPSCam.transform.forward;
-                    _snInClip--;
+                    if (_snInClip > 0)
+                    {
+                        if (iscooping)
+                        {
+                            StartCoroutine(scopedshot());
+                        }
+                        else
+                        {
+                            StartCoroutine(snipershoot());
+                        }
+                        //GameObject snBullet = Instantiate(sniperbullet, FPSCam.transform.position, FPSCam.transform.rotation);
+                        //GameObject snBullet = Instantiate(sniperbullet, FPSCam.transform.position, FPSCam.transform.rotation);
+                        //snBullet.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
+                        //snBullet.transform.position = FPSCam.transform.forward;
+                        //_snInClip--;
+                    }
+                }
+                else
+                {
+                    sniperanim.Play("sniper_default");
                 }
             }
-
             //Reloading
-            if (Input.GetKeyDown(reload))
+            if (Input.GetKey(reload))
             {
                 StartCoroutine(SniperReloadTime());
 
-                if (_snInClip < snClipSize && _snHeld > 0)
+            }
+            if (canshoot)
+            {
+                if (Input.GetMouseButton(1))
                 {
-                    if (_snHeld < snClipSize)
+                    if (iscooping == false)
                     {
-                        float reloaded = snClipSize - _snInClip;
-                        if (reloaded >= _snHeld)
-                        {
-                            _snInClip = _snInClip + _snHeld;
-                            _snHeld = 0;
-                        }
-                        else if (reloaded < _snHeld)
-                        {
-                            _snInClip = _snInClip + reloaded;
-                            _snHeld = _snHeld - reloaded;
-                        }
+                        StartCoroutine(scopein());
                     }
-                    else if (_snHeld >= snClipSize)
+
+                }
+                else
+                { if (iscooping)
                     {
-                        float reloaded = snClipSize - _snInClip;
-                        _snInClip = _snInClip + reloaded;
-                        _snHeld = _snHeld - reloaded;
+                        StartCoroutine(scopeout());
                     }
                 }
             }
@@ -409,58 +477,48 @@ public class PlayerShoot : MonoBehaviour
     {
         if (isAssaultRifle)
         {
+            crosshair.enabled = true;
             arObject.SetActive(true);
             shotgunObject.SetActive(false);
             sniperObject.SetActive(false);
             chainsaw.SetActive(false);
             //Shooting
-            if (Input.GetMouseButton(0))
+            if (canshoot)
             {
-                if (arElapsed <= arDesired) 
+                if (Input.GetMouseButton(0))
                 {
 
-                    arElapsed += Time.deltaTime;
-                }
-                else { 
-                    
-                    if (_arInClip > 0)
+                    if (arElapsed <= arDesired)
                     {
-                        GameObject arBullet = Instantiate(semiautobullet, FPSCam.transform.position, FPSCam.transform.rotation);
-                        //arBullet.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
-                        //arBullet.transform.position = FPSCam.transform.forward;
-                        _arInClip--;
+
+                        arElapsed += Time.deltaTime;
                     }
-                    arElapsed = 0;
+                    else
+                    {
+
+                        if (_arInClip > 0)
+                        {
+                            aranim.Play("AR_fire");
+                            GameObject arBullet = Instantiate(semiautobullet, FPSCam.transform.position, FPSCam.transform.rotation);
+                            //arBullet.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
+                            //arBullet.transform.position = FPSCam.transform.forward;
+                            _arInClip--;
+                        }
+                        arElapsed = 0;
+                    }
+
                 }
+                else
+                {
+                    aranim.Play("AR_default");
+                }
+
             }
 
             //Reloading
-            if (Input.GetKeyDown(reload))
+            if (Input.GetKey(reload))
             {
-                StartCoroutine(ARReloadTime());
-                if (_arInClip < arClipSize && _arHeld > 0)
-                {
-                    if (_arHeld < arClipSize)
-                    {
-                        float reloaded = arClipSize - _arInClip;
-                        if (reloaded >= _arHeld)
-                        {
-                            _arInClip = _arInClip + _arHeld;
-                            _arHeld = 0;
-                        }
-                        else if (reloaded < _arHeld)
-                        {
-                            _arInClip = _arInClip + reloaded;
-                            _arHeld = _arHeld - reloaded;
-                        }
-                    }
-                    else if (_arHeld >= arClipSize)
-                    {
-                        float reloaded = arClipSize - _arInClip;
-                        _arInClip = _arInClip + reloaded;
-                        _arHeld = _arHeld - reloaded;
-                    }
-                }
+                 StartCoroutine(ARReloadTime());
             }
         }
     }
@@ -469,6 +527,8 @@ public class PlayerShoot : MonoBehaviour
     {
         if (isChainsaw)
         {
+            chainsawanim.Play("chainsaw_default");
+            crosshair.enabled = false;
             chainsaw.SetActive(true);
             sniperObject.SetActive(false);
             shotgunObject.SetActive(false);
@@ -614,4 +674,57 @@ public class PlayerShoot : MonoBehaviour
             other.gameObject.SetActive(false);
         }
     }
+     IEnumerator snipershoot()
+     {
+        canshoot = false;
+        _snInClip--;
+        sniperanim.Play("sniper_fire");
+        GameObject snBullet = Instantiate(sniperbullet, FPSCam.transform.position, FPSCam.transform.rotation);
+        yield return new WaitForSeconds(0.15f);
+        sniperanim.Play("sniper_default");
+        canshoot = true;
+     }
+    IEnumerator scopein()
+    {
+        iscooping = true;
+        canshoot = false;
+        sniperanim.Play("sniper_scope_in");
+        yield return new WaitForSeconds(0.1f);
+        guncam.SetActive(false);
+        FPSCam.fieldOfView = 15f;
+        scoped.enabled = true;
+        canshoot = true;
+
+    }
+    IEnumerator scopeout()
+    {
+        iscooping = false;
+        canshoot = false;
+        scoped.enabled = false;
+        guncam.SetActive(true);
+        FPSCam.fieldOfView = 90f;
+        sniperanim.Play("sniper_scope_out");
+        yield return new WaitForSeconds(0.1f);
+        canshoot = true;
+    }
+    IEnumerator shotgunshoot()
+    {
+        canshoot = false;
+        GameObject sgBullet = Instantiate(shotgunbullet, FPSCam.transform.position, FPSCam.transform.rotation);
+        _sgInClip--;
+        shotgunanim.Play("shotgun_fire");
+        yield return new WaitForSeconds(0.4f);
+        shotgunanim.Play("shotgun_default");
+        canshoot = true;
+    }
+
+    IEnumerator scopedshot()
+    {
+        canshoot = false;
+        GameObject snBullet = Instantiate(sniperbullet, FPSCam.transform.position, FPSCam.transform.rotation);
+        _snInClip--;
+        yield return new WaitForSeconds(0.15f);
+        canshoot = true;
+    }
+
 }

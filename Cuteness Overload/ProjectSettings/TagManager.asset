@@ -17,6 +17,7 @@ TagManager:
   - ARAmmoCollectable
   - Chainsaw
   - Gun
+  - BeeEnemy
   layers:
   - Default
   - TransparentFX
@@ -24,9 +25,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - guns
+  - follow cam
+  - guns cam
   - 
   - 
   - 

@@ -8,6 +8,10 @@ using UnityEngine.SceneManagement;
 public class PlayerDamage : MonoBehaviour
 {
     public float playerHealth = 8f; //This is the player's current health value
+    public GameObject defaultscreen, deathscreen, chainsaw, shotgun, sniper, ar, ragdoll, ragcam, guncam, maincam;
+    public PlayerShoot shooter;
+    public PlayerMovement mover;
+    
 
     [SerializeField]
     private float maxPlayerHealth = 8f; //This is the max amount of health the player can have
@@ -15,12 +19,19 @@ public class PlayerDamage : MonoBehaviour
     [SerializeField]
     private Text healthText;
 
+    private void Start()
+    {
+        shooter = GetComponent<PlayerShoot>();
+        mover = GetComponent<PlayerMovement>();
+        ragcam.SetActive(false);
+        ragdoll.SetActive(false);
+    }
     private void Update()
     {
         healthText.text = playerHealth.ToString();
         if(playerHealth <= 0)
         {
-            SceneManager.LoadScene("End");
+            death();
         }
     }
 
@@ -60,5 +71,23 @@ public class PlayerDamage : MonoBehaviour
     public void TakeDamage() //Taking damage script, decreases the health.
     {
         playerHealth--;
+    }
+    public void death()
+    {
+        shooter.death = true;
+        mover.death = true;
+        defaultscreen.SetActive(false);
+        deathscreen.SetActive(true);
+
+        ragdoll.SetActive(true);
+        ragcam.SetActive(true);
+
+        chainsaw.SetActive(false);
+        sniper.SetActive(false);
+        shotgun.SetActive(false);
+        ar.SetActive(false);
+        maincam.SetActive(false);
+        guncam.SetActive(false);
+
     }
 }

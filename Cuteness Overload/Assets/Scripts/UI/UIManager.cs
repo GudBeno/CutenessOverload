@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject ControlPanel;
+    private GameObject ControlPanel, deathpanel, defaultpanel;
     public Image stamholder, healthholder, ammoholder, background;
     public Sprite stam0, stam1, stam2, stam3, stam4, stam5, stam6, stam7, stam8, stam9, stam10, stam11, stam12, heal1, heal2, heal3, heal4, heal5, heal6, heal7, heal8, snipammosp, shottyammosp, arammosp;
     public PlayerMovement playmove;
@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour
         stamspritechange();
         healthspritechange();
         ammospritechange();
+        deathpanel.SetActive(false);
+        defaultpanel.SetActive(true);
     }
 
     public void Controls()
@@ -153,5 +155,11 @@ public class UIManager : MonoBehaviour
             ammomax.enabled = true;
             ammoholder.enabled = true;
         }
+    }
+
+    public void deathUI()
+    {
+        defaultpanel.SetActive(false);
+        deathpanel.SetActive(true);
     }
 }

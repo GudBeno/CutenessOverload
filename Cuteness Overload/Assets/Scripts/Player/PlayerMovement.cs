@@ -46,6 +46,8 @@ public class PlayerMovement : MonoBehaviour
     private bool canJump = false;
     private bool isSprinting = false;
 
+    public bool death = false;
+
     private void Start() //Gets the Components needed in the later functions
     {
         rb = GetComponent<Rigidbody>();
@@ -55,14 +57,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update() //Checks the distance constantly for the jumping. Runs the functions.
     {
-        distGround = player.transform.position.y - ground.transform.position.y;
-        NormalMove();
-        Jump();
-        Rotate();
-        Dodge();
-        Sprint();
-        StaminaRefill();
-       // staminaText.text = stamina.ToString();
+        rb.angularVelocity = Vector3.zero;
+
+        if (death == false)
+        {
+            distGround = player.transform.position.y - ground.transform.position.y;
+            NormalMove();
+            Jump();
+            //        Rotate();
+            Dodge();
+            Sprint();
+            StaminaRefill();
+            // staminaText.text = stamina.ToString();
+        }
     }
 
     public void NormalMove() //Movement function
@@ -123,12 +130,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Rotate() //Rotates the player with the camera around the y axis
-    {
-        Vector3 EulerRotation = new Vector3(transform.eulerAngles.x, CamTrans.transform.eulerAngles.y, transform.eulerAngles.z);
+ //   public void Rotate() //Rotates the player with the camera around the y axis
+//    {
+        // Vector3 EulerRotation = new Vector3(transform.eulerAngles.x, CamTrans.transform.eulerAngles.y, transform.eulerAngles.z);
 
-        transform.rotation = Quaternion.Euler(EulerRotation);
-    }
+        // transform.rotation = Quaternion.Euler(EulerRotation);
+
+
+ //   }
 
     public void Dodge() //Dodge function, done by increasing speed
                         //Also added stamina deducted when dodging
