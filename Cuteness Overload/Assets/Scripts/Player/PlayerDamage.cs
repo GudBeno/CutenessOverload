@@ -25,7 +25,6 @@ public class PlayerDamage : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         deathscreen.SetActive(false);
         playerHealth = 8f;
-        shooter = GetComponent<PlayerShoot>();
         mover = GetComponent<PlayerMovement>();
         ragcam.SetActive(false);
         ragdoll.SetActive(false);
@@ -44,7 +43,22 @@ public class PlayerDamage : MonoBehaviour
         if (other.gameObject.CompareTag("HealthCollectable"))
         {
             CollectHealth();
-            other.gameObject.SetActive(false);
+            Destroy(other.gameObject);
+        }
+        if (other.gameObject.CompareTag("ARAmmoCollectable"))
+        {
+            shooter.CollectARAmmo();
+            Destroy(other.gameObject);
+        }
+        if (other.gameObject.CompareTag("ShotgunAmmoCollectable"))
+        {
+            shooter.CollectSGAmmo();
+            Destroy(other.gameObject);
+        }
+        if (other.gameObject.CompareTag("SniperAmmoCollectable"))
+        {
+            shooter.CollectSNAmmo();
+            Destroy(other.gameObject);
         }
     }
     private void OnCollisionEnter(Collision collision)

@@ -28,6 +28,9 @@ public class SpawnManager : MonoBehaviour
     private int numSpawns = 0, nummax;
     private float timer = 0f;
     public float counter = 0;
+    bool canspawn = true;
+    bool first = true, second = true, third = true, fourth = true, fifth = true, sixth = true, seventh = true, eigth = true, nineth = true, tenth = true;
+    int whichspawn;
 
     private void Start()
     {
@@ -39,45 +42,120 @@ public class SpawnManager : MonoBehaviour
     private void Update()
     {
         counter += Time.deltaTime;
-        if (counter > 60)
-        {
-            nummax = 25;
-            waitTime = 2.5f;
-        } 
-        if (counter > 120)
-        {
-            nummax = 35;
-            waitTime = 2;
-        }
-        if (counter > 180)
-        {
-            nummax = 45;
-            waitTime = 1.5f;
-        }
-        if (counter > 240)
-        {
-            nummax = 60;
-            waitTime = 1f;
-        }
 
-
-        numSpawns = GameObject.FindGameObjectsWithTag("Bearnemy").Length;
-        if (GameObject.FindGameObjectsWithTag("Bearnemy").Length == 0)
+        if (counter > 10 && counter < 11)
         {
-            timer += Time.deltaTime;
-            if (timer >= waitTime)
+            if (first)
             {
-                SpawnEnemy();
-                SpawnBee();
-                if (numSpawns < nummax)
-                {
-                    numSpawns++;
-                }
-                else if (numSpawns >= nummax)
-                {
-                    numSpawns = nummax;
-                }
-                timer = 0;
+                firstspawner();
+                secondspawner();
+                first = false;
+            }
+        }
+        if (counter > 20 && counter < 21)
+        {
+            if (second)
+            {
+                firstspawner();
+                thirdspawner();
+                second = false;
+            }
+        }
+        if (counter > 30 && counter < 31)
+        {
+            if (third)
+            {
+                fourthspawner();
+                thirdspawner();
+                third = false;
+            }
+
+        }
+        if (counter > 40 && counter < 41)
+        {
+            if (fourth)
+            {
+                firstspawner();
+                secondspawner();
+                thirdspawner();
+                fourthspawner();
+                fourth = false;
+            }
+
+        }
+        if (counter > 50 && counter < 51)
+        {
+            if (fifth)
+            {
+                firstspawner();
+                secondspawner();
+                thirdspawner();
+                fourthspawner();
+                fifth = false;
+            }
+
+        }
+        if (counter > 60 && counter < 61)
+        {
+            if (sixth)
+            {
+                firstspawner();
+                secondspawner();
+                thirdspawner();
+                fourthspawner();
+                sixth = false;
+            }
+
+        }
+        if (counter > 65 && counter < 66)
+        {
+            if (seventh)
+            {
+                firstspawner();
+                fourthspawner();
+                seventh = false;
+            }
+
+        }
+        if (counter > 70 && counter < 71)
+        {
+            if (eigth)
+            {
+                firstspawner();
+                secondspawner();
+                thirdspawner();
+                fourthspawner();
+                eigth = false;
+            }
+
+        }
+        if (counter > 75 && counter < 76)
+        {
+            if (nineth)
+            {
+                secondspawner();
+                thirdspawner();
+                nineth = false;
+            }
+
+        }
+        if (counter > 80 && counter < 81)
+        {
+            if (tenth)
+            {
+                firstspawner();
+                secondspawner();
+                thirdspawner();
+                fourthspawner();
+                tenth = false;
+            }
+
+        }
+        if (counter > 90)
+        {
+            if (canspawn == true)
+            {
+                StartCoroutine(spawnconstant());
             }
         }
     }
@@ -144,5 +222,77 @@ public class SpawnManager : MonoBehaviour
     IEnumerator SpawnWait()
     {
         yield return new WaitForSeconds(0.5f);
+    }
+    void firstspawner()
+    {
+        int firstspawn = Random.Range(1, 10);
+        if (firstspawn < 6)
+        {
+            Instantiate(enemy, spawn1.transform.position, spawn1.transform.rotation);
+        }
+        if (firstspawn >= 6)
+        {
+            Instantiate(bee, spawn1.transform.position, spawn1.transform.rotation);
+        }
+    }
+    void secondspawner()
+    {
+        int secoundspawn = Random.Range(1, 10);
+        if (secoundspawn < 6)
+        {
+            Instantiate(enemy, spawn2.transform.position, spawn2.transform.rotation);
+        }
+        if (secoundspawn >= 6)
+        {
+            Instantiate(bee, spawn2.transform.position, spawn2.transform.rotation);
+        }
+    }
+    void thirdspawner()
+    {
+        int thirdspawn = Random.Range(1, 10);
+        if (thirdspawn < 6)
+        {
+            Instantiate(enemy, spawn3.transform.position, spawn3.transform.rotation);
+        }
+        if (thirdspawn >= 6)
+        {
+            Instantiate(bee, spawn3.transform.position, spawn3.transform.rotation);
+        }
+    }
+    void fourthspawner()
+    {
+        int fourthspawn = Random.Range(1, 10);
+        if (fourthspawn < 6)
+        {
+            Instantiate(enemy, spawn4.transform.position, spawn4.transform.rotation);
+        }
+        if (fourthspawn >= 6)
+        {
+            Instantiate(bee, spawn4.transform.position, spawn4.transform.rotation);
+        }
+    }
+    IEnumerator spawnconstant()
+    {
+        canspawn = false;
+        switch (whichspawn)
+        {
+            case 1: firstspawner();
+                whichspawn++;
+                break;
+            case 2:
+                secondspawner();
+                whichspawn++;
+                break;
+            case 3:
+                thirdspawner();
+                whichspawn++;
+                break;
+            case 4:
+                fourthspawner();
+                whichspawn = 1;
+                break;
+        }
+        yield return new WaitForSeconds(0.5f);
+        canspawn = true;
     }
 }

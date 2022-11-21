@@ -343,8 +343,10 @@ public class PlayerShoot : MonoBehaviour
             //Reloading
             if (Input.GetKey(reload))
             {
-                StartCoroutine(SniperReloadTime());
-
+                if (iscooping == false)
+                {
+                    StartCoroutine(SniperReloadTime());
+                }
             }
             if (canshoot)
             {
@@ -435,49 +437,18 @@ public class PlayerShoot : MonoBehaviour
 
     public void ChangeWeapon()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))//AR
+        if (iscooping == false)
         {
-            gunsanim.Play("AR_up");
-            isAssaultRifle = true;
-            isChainsaw = false;
-            isShotgun = false;
-            isSniper = false;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))//Chainsaw
-        {
-            gunsanim.Play("chainsaw_up");
-            isChainsaw = true;
-            isAssaultRifle = false;
-            isShotgun = false;
-            isSniper = false;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))//Shotgun
-        {
-            gunsanim.Play("shotgun_up");
-            isShotgun = true;
-            isChainsaw = false;
-            isAssaultRifle = false;
-            isSniper = false;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))//Sniper
-        {
-            gunsanim.Play("sniper_up");
-            isSniper = true;
-            isShotgun = false;
-            isChainsaw = false;
-            isAssaultRifle = false;
-        }
-        if (isAssaultRifle)
-        {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to Sniper
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))//AR
             {
-                gunsanim.Play("sniper_up");
-                isSniper = true;
-                isAssaultRifle = false;
+                gunsanim.Play("AR_up");
+                isAssaultRifle = true;
                 isChainsaw = false;
                 isShotgun = false;
+                isSniper = false;
             }
-            if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to Chainsaw
+            if (Input.GetKeyDown(KeyCode.Alpha2))//Chainsaw
             {
                 gunsanim.Play("chainsaw_up");
                 isChainsaw = true;
@@ -485,62 +456,97 @@ public class PlayerShoot : MonoBehaviour
                 isShotgun = false;
                 isSniper = false;
             }
-        }
-        else if (isShotgun)
-        {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to Chainsaw
+            if (Input.GetKeyDown(KeyCode.Alpha3))//Shotgun
             {
-                gunsanim.Play("chainsaw_up");
-                isChainsaw = true;
+                gunsanim.Play("shotgun_up");
+                isShotgun = true;
+                isChainsaw = false;
                 isAssaultRifle = false;
-                isShotgun = false;
                 isSniper = false;
             }
-            if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to Sniper
+            if (Input.GetKeyDown(KeyCode.Alpha4))//Sniper
             {
                 gunsanim.Play("sniper_up");
                 isSniper = true;
-                isAssaultRifle = false;
-                isChainsaw = false;
                 isShotgun = false;
-            }
-        }
-        else if (isSniper)
-        {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to Shotgun
-            {
-                gunsanim.Play("shotgun_up");
-                isShotgun = true;
+                isChainsaw = false;
                 isAssaultRifle = false;
-                isSniper = false;
-                isChainsaw = false;
             }
-            if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to AR
+            if (isAssaultRifle)
             {
-                gunsanim.Play("AR_up");
-                isAssaultRifle = true;
-                isChainsaw = false;
-                isSniper = false;
-                isShotgun = false;
+                if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to Sniper
+                {
+                    gunsanim.Play("sniper_up");
+                    isSniper = true;
+                    isAssaultRifle = false;
+                    isChainsaw = false;
+                    isShotgun = false;
+                }
+                if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to Chainsaw
+                {
+                    gunsanim.Play("chainsaw_up");
+                    isChainsaw = true;
+                    isAssaultRifle = false;
+                    isShotgun = false;
+                    isSniper = false;
+                }
             }
-        }
-        else if (isChainsaw)
-        {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to AR
+            else if (isShotgun)
             {
-                gunsanim.Play("AR_up");
-                isAssaultRifle = true;
-                isChainsaw = false;
-                isSniper = false;
-                isShotgun = false;
+                if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to Chainsaw
+                {
+                    gunsanim.Play("chainsaw_up");
+                    isChainsaw = true;
+                    isAssaultRifle = false;
+                    isShotgun = false;
+                    isSniper = false;
+                }
+                if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to Sniper
+                {
+                    gunsanim.Play("sniper_up");
+                    isSniper = true;
+                    isAssaultRifle = false;
+                    isChainsaw = false;
+                    isShotgun = false;
+                }
             }
-            if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to Shotgun
+            else if (isSniper)
             {
-                gunsanim.Play("shotgun_up");
-                isShotgun = true;
-                isAssaultRifle = false;
-                isSniper = false;
-                isChainsaw = false;
+                if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to Shotgun
+                {
+                    gunsanim.Play("shotgun_up");
+                    isShotgun = true;
+                    isAssaultRifle = false;
+                    isSniper = false;
+                    isChainsaw = false;
+                }
+                if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to AR
+                {
+                    gunsanim.Play("AR_up");
+                    isAssaultRifle = true;
+                    isChainsaw = false;
+                    isSniper = false;
+                    isShotgun = false;
+                }
+            }
+            else if (isChainsaw)
+            {
+                if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to AR
+                {
+                    gunsanim.Play("AR_up");
+                    isAssaultRifle = true;
+                    isChainsaw = false;
+                    isSniper = false;
+                    isShotgun = false;
+                }
+                if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to Shotgun
+                {
+                    gunsanim.Play("shotgun_up");
+                    isShotgun = true;
+                    isAssaultRifle = false;
+                    isSniper = false;
+                    isChainsaw = false;
+                }
             }
         }
     }
@@ -565,24 +571,6 @@ public class PlayerShoot : MonoBehaviour
   //      }
   //  }
 
-    private void OnTriggerEnter(Collider other) //When the player enters the trigger of an Ammo Collectable, runs the CollectAmmo function.
-    {
-        if(other.gameObject.CompareTag("ARAmmoCollectable"))
-        {
-            CollectARAmmo();
-            other.gameObject.SetActive(false);
-        }
-        if (other.gameObject.CompareTag("ShotgunAmmoCollectable"))
-        {
-            CollectSGAmmo();
-            other.gameObject.SetActive(false);
-        }
-        if (other.gameObject.CompareTag("SniperAmmoCollectable"))
-        {
-            CollectSNAmmo();
-            other.gameObject.SetActive(false);
-        }
-    }
      IEnumerator snipershoot()
      {
         canshoot = false;

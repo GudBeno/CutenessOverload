@@ -63,7 +63,6 @@ public class PlayerMovement : MonoBehaviour
     private void Update() //Checks the distance constantly for the jumping. Runs the functions.
     {
         rb.angularVelocity = Vector3.zero;
-        Debug.Log("Vertical Velocity: " + rb.velocity.y);
         
         if (death == false)
         {
