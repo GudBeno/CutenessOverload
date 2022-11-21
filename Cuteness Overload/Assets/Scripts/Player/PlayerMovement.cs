@@ -63,12 +63,14 @@ public class PlayerMovement : MonoBehaviour
     private void Update() //Checks the distance constantly for the jumping. Runs the functions.
     {
         rb.angularVelocity = Vector3.zero;
-
+        Debug.Log("Vertical Velocity: " + rb.velocity.y);
+        
         if (death == false)
         {
             distGround = player.transform.position.y - ground.transform.position.y;
             NormalMove();
             Jump();
+            Falling();
             //        Rotate();
             Dodge();
             Sprint();
@@ -127,10 +129,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.AddForce(transform.up * jumpHeight);
                 rb.AddForce(transform.up * jumpGravity * Time.deltaTime);
-                if (rb.velocity.y < 0)
-                {
-                    Physics.gravity = new Vector3(0, -15, 0);
-                }
             }
         }
     }
@@ -230,6 +228,15 @@ public class PlayerMovement : MonoBehaviour
         if (isSprinting)
         {
             stamina--;
+        }
+    }
+
+    public void Falling()
+    {
+        if (rb.velocity.y < 0)
+        {
+            //Physics.gravity = new Vector3(0, -15, 0);
+            rb.AddForce(Vector3.down * Time.deltaTime * 10000);
         }
     }
 
