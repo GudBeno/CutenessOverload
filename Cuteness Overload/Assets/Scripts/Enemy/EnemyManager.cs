@@ -99,7 +99,6 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnRandom()
     {
-        Debug.Log("does it get here?");
         if(randomDrop == 1)
         {
             Instantiate(healthCollect, new Vector3(this.transform.position.x, this.transform.position.y , this.transform.position.z), this.transform.rotation);

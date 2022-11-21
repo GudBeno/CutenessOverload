@@ -9,7 +9,6 @@ public class PlayerShoot : MonoBehaviour
 {
     [SerializeField]
     private Camera FPSCam;
-    public GameObject guncam;
     [SerializeField]
     private Transform projSpawn;
     [SerializeField]
@@ -18,16 +17,6 @@ public class PlayerShoot : MonoBehaviour
     private GameObject sniperbullet;
     [SerializeField]
     private GameObject shotgunbullet;
-    [SerializeField]
-    private GameObject chainsaw;
-    [SerializeField]
-    private GameObject sniperObject;
-    [SerializeField]
-    private GameObject shotgunObject;
-    [SerializeField]
-    private GameObject arObject;
-    [SerializeField]
-    private CinemachineVirtualCamera vcam;
     [SerializeField]
     private float allowedAmmo = 10f; //This is the size of the magazine clip, the amount of ammo the gun can store at one time
     [SerializeField]
@@ -86,9 +75,9 @@ public class PlayerShoot : MonoBehaviour
     private Text storedAmmoText;
     [SerializeField]
     private Text gunTypeText;
-    public Image crosshair, scoped;
+    public Image crosshair;
 
-    public Animator chainsawanim, sniperanim, shotgunanim, aranim;
+    public Animator gunsanim;
 
     public bool death = false;
 
@@ -102,11 +91,11 @@ public class PlayerShoot : MonoBehaviour
     //weapon currentWeapon;
     private void Start() //Locks the cursor to the centre and hides it
     {
-        scoped.enabled = false;
-        chainsaw.SetActive(false);
-        sniperObject.SetActive(false);
-        shotgunObject.SetActive(false);
-        arObject.SetActive(true);
+//        chainsaw.SetActive(false);
+//        sniperObject.SetActive(false);
+//        shotgunObject.SetActive(false);
+//        arObject.SetActive(true);
+//
         Cursor.lockState = CursorLockMode.Locked;
         offset = new Vector3(0, 1.54f, 0);
     }
@@ -115,13 +104,13 @@ public class PlayerShoot : MonoBehaviour
     {
         if (death == false)
         {
+            ChangeWeapon();
             Shotgun();
             Sniper();
             AssaultRifle();
             Chainsaw();
             //Reload();
-            ChangeWeapon();
-            GunTypeText();
+            //GunTypeText();
             Debug.DrawRay(FPSCam.transform.position, FPSCam.transform.forward, Color.magenta);
         }
 
@@ -185,9 +174,9 @@ public class PlayerShoot : MonoBehaviour
     IEnumerator ShotgunReloadTime()
     {
         canshoot = false;
-        shotgunanim.Play("shotgun_reload");
+        gunsanim.Play("shotgun_reload");
         yield return new WaitForSeconds(shReloadDesired);
-        shotgunanim.Play("shotgun_default");
+        gunsanim.Play("shotgun_default");
         if (_sgInClip < sgClipSize && _sgHeld > 0)
         {
             if (_sgHeld < sgClipSize)
@@ -218,9 +207,9 @@ public class PlayerShoot : MonoBehaviour
     IEnumerator SniperReloadTime()
     {
         canshoot = false;
-        sniperanim.Play("sniper_reload");
+        gunsanim.Play("sniper_reload");
         yield return new WaitForSeconds(snReloadDesired);
-        sniperanim.Play("sniper_default");
+        gunsanim.Play("sniper_default");
         if (_snInClip < snClipSize && _snHeld > 0)
         {
             if (_snHeld < snClipSize)
@@ -250,9 +239,9 @@ public class PlayerShoot : MonoBehaviour
     IEnumerator ARReloadTime()
     {
         canshoot = false;
-        aranim.Play("AR_reload");
+        gunsanim.Play("AR_reload");
         yield return new WaitForSeconds(arReloadDesired);
-        aranim.Play("AR_default");
+        gunsanim.Play("AR_default");
         if (_arInClip < arClipSize && _arHeld > 0)
         {
             if (_arHeld < arClipSize)
@@ -286,10 +275,10 @@ public class PlayerShoot : MonoBehaviour
             clipAmmoText.text = _sgInClip.ToString();
             storedAmmoText.text = _sgHeld.ToString();
             crosshair.enabled = true;
-            shotgunObject.SetActive(true);
-            sniperObject.SetActive(false);
-            arObject.SetActive(false);
-            chainsaw.SetActive(false);
+//            shotgunObject.SetActive(true);
+//          sniperObject.SetActive(false);
+//          arObject.SetActive(false);
+//          chainsaw.SetActive(false);
             //Shooting
             if (canshoot)
             {
@@ -306,7 +295,7 @@ public class PlayerShoot : MonoBehaviour
                 }
                 else
                 {
-                    shotgunanim.Play("shotgun_default");
+                    gunsanim.Play("shotgun_default");
                 }
             }
             //Reloading
@@ -324,10 +313,10 @@ public class PlayerShoot : MonoBehaviour
             clipAmmoText.text = _snInClip.ToString();
             storedAmmoText.text = _snHeld.ToString();
             crosshair.enabled = false;
-            sniperObject.SetActive(true);
-            shotgunObject.SetActive(false);
-            arObject.SetActive(false);
-            chainsaw.SetActive(false);
+//            sniperObject.SetActive(true);
+//            shotgunObject.SetActive(false);
+//            arObject.SetActive(false);
+//            chainsaw.SetActive(false);
             //Shooting
             if (canshoot)
             {
@@ -349,10 +338,6 @@ public class PlayerShoot : MonoBehaviour
                         //snBullet.transform.position = FPSCam.transform.forward;
                         //_snInClip--;
                     }
-                }
-                else
-                {
-                    sniperanim.Play("sniper_default");
                 }
             }
             //Reloading
@@ -388,10 +373,10 @@ public class PlayerShoot : MonoBehaviour
             clipAmmoText.text = _arInClip.ToString();
             storedAmmoText.text = _arHeld.ToString();
             crosshair.enabled = true;
-            arObject.SetActive(true);
-            shotgunObject.SetActive(false);
-            sniperObject.SetActive(false);
-            chainsaw.SetActive(false);
+//            arObject.SetActive(true);
+//            shotgunObject.SetActive(false);
+//            sniperObject.SetActive(false);
+//            chainsaw.SetActive(false);
             //Shooting
             if (canshoot)
             {
@@ -408,7 +393,7 @@ public class PlayerShoot : MonoBehaviour
 
                         if (_arInClip > 0)
                         {
-                            aranim.Play("AR_fire");
+                            gunsanim.Play("AR_fire");
                             GameObject arBullet = Instantiate(semiautobullet, FPSCam.transform.position, FPSCam.transform.rotation);
                             //arBullet.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
                             //arBullet.transform.position = FPSCam.transform.forward;
@@ -420,7 +405,7 @@ public class PlayerShoot : MonoBehaviour
                 }
                 else
                 {
-                    aranim.Play("AR_default");
+                    gunsanim.Play("AR_default");
                 }
 
             }
@@ -439,12 +424,12 @@ public class PlayerShoot : MonoBehaviour
         {
             clipAmmoText.text = "";
             storedAmmoText.text = "";
-            chainsawanim.Play("chainsaw_default");
+            gunsanim.Play("chainsaw_default");
             crosshair.enabled = false;
-            chainsaw.SetActive(true);
-            sniperObject.SetActive(false);
-            shotgunObject.SetActive(false);
-            arObject.SetActive(false);
+//            chainsaw.SetActive(true);
+//            sniperObject.SetActive(false);
+//            shotgunObject.SetActive(false);
+//            arObject.SetActive(false);
         }
     }
 
@@ -452,6 +437,7 @@ public class PlayerShoot : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))//AR
         {
+            gunsanim.Play("AR_up");
             isAssaultRifle = true;
             isChainsaw = false;
             isShotgun = false;
@@ -459,6 +445,7 @@ public class PlayerShoot : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))//Chainsaw
         {
+            gunsanim.Play("chainsaw_up");
             isChainsaw = true;
             isAssaultRifle = false;
             isShotgun = false;
@@ -466,6 +453,7 @@ public class PlayerShoot : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))//Shotgun
         {
+            gunsanim.Play("shotgun_up");
             isShotgun = true;
             isChainsaw = false;
             isAssaultRifle = false;
@@ -473,6 +461,7 @@ public class PlayerShoot : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))//Sniper
         {
+            gunsanim.Play("sniper_up");
             isSniper = true;
             isShotgun = false;
             isChainsaw = false;
@@ -482,6 +471,7 @@ public class PlayerShoot : MonoBehaviour
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to Sniper
             {
+                gunsanim.Play("sniper_up");
                 isSniper = true;
                 isAssaultRifle = false;
                 isChainsaw = false;
@@ -489,6 +479,7 @@ public class PlayerShoot : MonoBehaviour
             }
             if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to Chainsaw
             {
+                gunsanim.Play("chainsaw_up");
                 isChainsaw = true;
                 isAssaultRifle = false;
                 isShotgun = false;
@@ -499,6 +490,7 @@ public class PlayerShoot : MonoBehaviour
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to Chainsaw
             {
+                gunsanim.Play("chainsaw_up");
                 isChainsaw = true;
                 isAssaultRifle = false;
                 isShotgun = false;
@@ -506,6 +498,7 @@ public class PlayerShoot : MonoBehaviour
             }
             if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to Sniper
             {
+                gunsanim.Play("sniper_up");
                 isSniper = true;
                 isAssaultRifle = false;
                 isChainsaw = false;
@@ -516,6 +509,7 @@ public class PlayerShoot : MonoBehaviour
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to Shotgun
             {
+                gunsanim.Play("shotgun_up");
                 isShotgun = true;
                 isAssaultRifle = false;
                 isSniper = false;
@@ -523,6 +517,7 @@ public class PlayerShoot : MonoBehaviour
             }
             if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to AR
             {
+                gunsanim.Play("AR_up");
                 isAssaultRifle = true;
                 isChainsaw = false;
                 isSniper = false;
@@ -533,6 +528,7 @@ public class PlayerShoot : MonoBehaviour
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)//Moves up to AR
             {
+                gunsanim.Play("AR_up");
                 isAssaultRifle = true;
                 isChainsaw = false;
                 isSniper = false;
@@ -540,6 +536,7 @@ public class PlayerShoot : MonoBehaviour
             }
             if (Input.GetAxis("Mouse ScrollWheel") < 0f)//Moves down to Shotgun
             {
+                gunsanim.Play("shotgun_up");
                 isShotgun = true;
                 isAssaultRifle = false;
                 isSniper = false;
@@ -548,25 +545,25 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    public void GunTypeText()
-    {
-        if (isAssaultRifle)
-        {
-            gunTypeText.text = "AR";
-        }
-        if (isShotgun)
-        {
-            gunTypeText.text = "Shotgun";
-        }
-        if (isSniper)
-        {
-            gunTypeText.text = "Sniper";
-        }
-        if (isChainsaw)
-        {
-            gunTypeText.text = "Chainsaw";
-        }
-    }
+ //   public void GunTypeText()
+ //   {
+ //      if (isAssaultRifle)
+ //       {
+ //           gunTypeText.text = "AR";
+//        }
+//        if (isShotgun)
+//        {
+//            gunTypeText.text = "Shotgun";
+//        }
+//        if (isSniper)
+//        {
+//            gunTypeText.text = "Sniper";
+//       }
+ //       if (isChainsaw)
+ //       {
+   //         gunTypeText.text = "Chainsaw";
+  //      }
+  //  }
 
     private void OnTriggerEnter(Collider other) //When the player enters the trigger of an Ammo Collectable, runs the CollectAmmo function.
     {
@@ -590,21 +587,20 @@ public class PlayerShoot : MonoBehaviour
      {
         canshoot = false;
         _snInClip--;
-        sniperanim.Play("sniper_fire");
+        gunsanim.Play("sniper_fire");
         GameObject snBullet = Instantiate(sniperbullet, FPSCam.transform.position, FPSCam.transform.rotation);
         yield return new WaitForSeconds(0.15f);
-        sniperanim.Play("sniper_default");
+        gunsanim.Play("sniper_default");
         canshoot = true;
      }
     IEnumerator scopein()
     {
         iscooping = true;
         canshoot = false;
-        sniperanim.Play("sniper_scope_in");
+        gunsanim.Play("sniper_scope_in");
         yield return new WaitForSeconds(0.1f);
-        guncam.SetActive(false);
+        gunsanim.Play("scopedin");
         FPSCam.fieldOfView = 15f;
-        scoped.enabled = true;
         canshoot = true;
 
     }
@@ -612,11 +608,10 @@ public class PlayerShoot : MonoBehaviour
     {
         iscooping = false;
         canshoot = false;
-        scoped.enabled = false;
-        guncam.SetActive(true);
         FPSCam.fieldOfView = 90f;
-        sniperanim.Play("sniper_scope_out");
+        gunsanim.Play("sniper_scope_out");
         yield return new WaitForSeconds(0.1f);
+        gunsanim.Play("sniper_default");
         canshoot = true;
     }
     IEnumerator shotgunshoot()
@@ -624,9 +619,9 @@ public class PlayerShoot : MonoBehaviour
         canshoot = false;
         GameObject sgBullet = Instantiate(shotgunbullet, FPSCam.transform.position, FPSCam.transform.rotation);
         _sgInClip--;
-        shotgunanim.Play("shotgun_fire");
+        gunsanim.Play("shotgun_fire");
         yield return new WaitForSeconds(0.4f);
-        shotgunanim.Play("shotgun_default");
+        gunsanim.Play("shotgun_default");
         canshoot = true;
     }
 

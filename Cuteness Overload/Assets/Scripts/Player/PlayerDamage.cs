@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class PlayerDamage : MonoBehaviour
 {
     public float playerHealth = 8f; //This is the player's current health value
-    public GameObject defaultscreen, deathscreen, chainsaw, shotgun, sniper, ar, ragdoll, ragcam, guncam, maincam;
+    public GameObject defaultscreen, deathscreen,ragdoll, ragcam, maincam;
     public PlayerShoot shooter;
     public PlayerMovement mover;
     public Rigidbody rb;
@@ -87,12 +87,9 @@ public class PlayerDamage : MonoBehaviour
         ragdoll.SetActive(true);
         ragcam.SetActive(true);
 
-        chainsaw.SetActive(false);
-        sniper.SetActive(false);
-        shotgun.SetActive(false);
-        ar.SetActive(false);
+      
         maincam.SetActive(false);
-        guncam.SetActive(false);
+
 
     }
 }
