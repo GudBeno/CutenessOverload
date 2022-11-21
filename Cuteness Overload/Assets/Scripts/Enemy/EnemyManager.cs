@@ -121,16 +121,17 @@ public class EnemyManager : MonoBehaviour
     {
         if (this.gameObject.CompareTag("BeeEnemy"))
         {
-            if(distanceBee <= 7f)
+            if(distanceBee <= 6f)
             {
-                transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
+                transform.position = new Vector3(transform.position.x, 2f, transform.position.z);
+                GetComponent<NavMeshAgent>().baseOffset = 2f;
             }
         }
     }
 
     public void WakingUp()
     {
-        if(distance >= 50)
+        if(distance >= 25)
         {
             GetComponent<NavMeshAgent>().speed = 0f;
         }
