@@ -83,7 +83,9 @@ public class PlayerMovement : MonoBehaviour
         
         if (Input.GetKey(forward))
         {
-            rb.AddForce(transform.forward * speed); //try rb.velocity
+            //rb.AddForce(transform.forward * speed);
+            transform.Translate(transform.forward * speed); //Currently clips through the ground
+            //Couldnt get rb.velocity to work without a lot of extra research and work, could try tomorrow morning, but not sure
             moveFor = true;
         }
         if (Input.GetKeyUp(forward))
@@ -92,7 +94,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(backward))
         {
-            rb.AddForce(transform.forward * -speed);
+            //rb.AddForce(transform.forward * -speed);
+            transform.Translate(transform.forward * -speed);
             moveBack = true;
         }
         if (Input.GetKeyUp(backward))
@@ -101,7 +104,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(left))
         {
-            rb.AddForce(transform.right * -speed);
+            //rb.AddForce(transform.right * -speed);
+            transform.Translate(transform.right * -speed);
             moveLeft = true;
         }
         if (Input.GetKeyUp(left))
@@ -110,7 +114,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(right))
         {
-            rb.AddForce(transform.right * speed);
+            //rb.AddForce(transform.right * speed);
+            transform.Translate(transform.right * speed);
             moveRight = true;
         }
         if (Input.GetKeyUp(right))
