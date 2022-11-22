@@ -389,7 +389,7 @@ public class PlayerShoot : MonoBehaviour
                     Debug.Log("boing");
                     ardeal = true;
                 }
-                else if (arhit.transform.CompareTag("Beenemy"))
+                else if (arhit.transform.CompareTag("BeeEnemy"))
                 {
                     ardeal = true;
                 }
