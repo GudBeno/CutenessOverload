@@ -694,6 +694,7 @@ public class PlayerShoot : MonoBehaviour
         gunsanim.Play("chainsaw_kill");
         yield return new WaitForSeconds(0.7f);
         gunsanim.Play("chainsaw_default");
+        canshoot = true;
     }
 
 }

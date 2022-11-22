@@ -2,34 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject deathpanel, defaultpanel;
-    public Image stamholder, healthholder, ammoholder, background, ControlPanel;
+    public GameObject deathpanel, defaultpanel, ControlPanel;
+    public Image stamholder, healthholder, ammoholder, background ;
     public Sprite stam0, stam1, stam2, stam3, stam4, stam5, stam6, stam7, stam8, stam9, stam10, stam11, stam12, heal1, heal2, heal3, heal4, heal5, heal6, heal7, heal8, snipammosp, shottyammosp, arammosp;
     public PlayerMovement playmove;
     public PlayerDamage playdamn;
     public PlayerShoot playshoot;
     public Text ammoclip, ammomax;
     bool contab;
-
+    private void Start()
+    {
+        deathpanel.SetActive(false);
+        defaultpanel.SetActive(true);
+        ControlPanel.SetActive(false);
+        contab = false;
+    }
     private void Update()
     {
         Controls();
         stamspritechange();
         healthspritechange();
         ammospritechange();
-        deathpanel.SetActive(false);
-        defaultpanel.SetActive(true);
-        ControlPanel.enabled = false;
-        contab = false;
     }
 
     public void Controls()
     {
-        
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (contab)
+            {
+                ControlPanel.SetActive(false);
+                contab = false;
+                Time.timeScale = 1;
+            }
+            else
+            {
+                ControlPanel.SetActive(true);
+                contab = true;
+                Time.timeScale = 0;
+            }
+        }
     }
     private void stamspritechange()
     {
@@ -156,4 +172,13 @@ public class UIManager : MonoBehaviour
         defaultpanel.SetActive(false);
         deathpanel.SetActive(true);
     }
+    public void mainmenu()
+    {
+        SceneManager.LoadScene("MAIN MENU");
+    }
+    public void playagain()
+    {
+        SceneManager.LoadScene("Level 1");
+    }
+
 }
