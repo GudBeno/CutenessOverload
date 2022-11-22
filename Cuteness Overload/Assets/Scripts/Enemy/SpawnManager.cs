@@ -52,7 +52,7 @@ public class SpawnManager : MonoBehaviour
                 first = false;
             }
         }
-        if (counter > 20 && counter < 21)
+        if (counter > 30 && counter < 31)
         {
             if (second)
             {
@@ -61,7 +61,7 @@ public class SpawnManager : MonoBehaviour
                 second = false;
             }
         }
-        if (counter > 30 && counter < 31)
+        if (counter > 50 && counter < 51)
         {
             if (third)
             {
@@ -71,7 +71,7 @@ public class SpawnManager : MonoBehaviour
             }
 
         }
-        if (counter > 40 && counter < 41)
+        if (counter > 70 && counter < 71)
         {
             if (fourth)
             {
@@ -83,7 +83,7 @@ public class SpawnManager : MonoBehaviour
             }
 
         }
-        if (counter > 50 && counter < 51)
+        if (counter > 80 && counter < 81)
         {
             if (fifth)
             {
@@ -95,7 +95,7 @@ public class SpawnManager : MonoBehaviour
             }
 
         }
-        if (counter > 60 && counter < 61)
+        if (counter > 90 && counter < 91)
         {
             if (sixth)
             {
@@ -107,7 +107,7 @@ public class SpawnManager : MonoBehaviour
             }
 
         }
-        if (counter > 65 && counter < 66)
+        if (counter > 95 && counter < 96)
         {
             if (seventh)
             {
@@ -117,7 +117,7 @@ public class SpawnManager : MonoBehaviour
             }
 
         }
-        if (counter > 70 && counter < 71)
+        if (counter > 100 && counter < 101)
         {
             if (eigth)
             {
@@ -129,7 +129,7 @@ public class SpawnManager : MonoBehaviour
             }
 
         }
-        if (counter > 75 && counter < 76)
+        if (counter > 105 && counter < 106)
         {
             if (nineth)
             {
@@ -139,7 +139,7 @@ public class SpawnManager : MonoBehaviour
             }
 
         }
-        if (counter > 80 && counter < 81)
+        if (counter > 110 && counter < 111)
         {
             if (tenth)
             {
@@ -151,7 +151,7 @@ public class SpawnManager : MonoBehaviour
             }
 
         }
-        if (counter > 90)
+        if (counter > 120)
         {
             if (canspawn == true)
             {
@@ -262,11 +262,11 @@ public class SpawnManager : MonoBehaviour
     void fourthspawner()
     {
         int fourthspawn = Random.Range(1, 10);
-        if (fourthspawn < 6)
+        if (fourthspawn < 8)
         {
             Instantiate(enemy, spawn4.transform.position, spawn4.transform.rotation);
         }
-        if (fourthspawn >= 6)
+        if (fourthspawn >= 8)
         {
             Instantiate(bee, spawn4.transform.position, spawn4.transform.rotation);
         }

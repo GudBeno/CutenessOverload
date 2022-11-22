@@ -6,9 +6,9 @@ using UnityEngine.AI;
 public class EnemyManager : MonoBehaviour
 {
     private float health;
-    private float ARDamage = 10f;
+    private float ARDamage = 15f;
     private float SniperDamage = 55f;
-    private float ShotgunDamage = 5f;
+    private float ShotgunDamage = 10f;
     private int randomDrop;
     public GameObject explosion;
     public GameObject gamecon;
@@ -35,7 +35,7 @@ public class EnemyManager : MonoBehaviour
         gamecon = GameObject.FindGameObjectWithTag("gamecontroller");
         gamecontrol = gamecon.GetComponent<gamecontroller>();
         agent = GetComponent<NavMeshAgent>();
-        randomDrop = Random.Range(1, 4);
+        randomDrop = Random.Range(1, 100);
         player = GameObject.FindGameObjectWithTag("Player");
         playerTransform = player.GetComponent<Transform>();
 
@@ -90,19 +90,19 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnRandom()
     {
-        if(randomDrop == 1)
+        if(randomDrop <= 50)
         {
             Instantiate(healthCollect, new Vector3(this.transform.position.x, this.transform.position.y , this.transform.position.z), this.transform.rotation);
         }
-        if(randomDrop == 2)
+        if(randomDrop >50 && randomDrop <= 70)
         {
             Instantiate(arAmmoCollect, new Vector3(this.transform.position.x, this.transform.position.y , this.transform.position.z), this.transform.rotation);
         }
-        if(randomDrop == 3)
+        if(randomDrop > 70 && randomDrop <= 85)
         {
             Instantiate(snAmmoCollect, new Vector3(this.transform.position.x, this.transform.position.y , this.transform.position.z), this.transform.rotation);
         }
-        if(randomDrop == 4)
+        if(randomDrop > 85)
         {
             Instantiate(shAmmoCollect, new Vector3(this.transform.position.x, this.transform.position.y , this.transform.position.z), this.transform.rotation);
         }

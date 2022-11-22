@@ -64,9 +64,14 @@ public class PlayerDamage : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Bearnemy") || collision.gameObject.CompareTag("BeeEnemy"))
+        if (collision.gameObject.CompareTag("Bearnemy"))
         {
             TakeDamage();
+        }
+        if (collision.gameObject.CompareTag("BeeEnemy"))
+        {
+            playerHealth = playerHealth - 2;
+            Destroy(collision.gameObject);
         }
     }
 
@@ -90,7 +95,7 @@ public class PlayerDamage : MonoBehaviour
     public void TakeDamage() //Taking damage script, decreases the health.
     {
         playerHealth--;
-        rb.AddForce(transform.up * 18000f);
+        rb.AddForce(transform.up * 12000f);
     }
     public void death()
     {
