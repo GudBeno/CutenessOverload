@@ -98,7 +98,7 @@ MonoBehaviour:
   arAmmoCollect: {fileID: 424440170136908605, guid: b106a45e2b1ca12459e89e2f6154255e, type: 3}
   snAmmoCollect: {fileID: 424440170136908605, guid: 015881598c98a3342a396514d89e58f6, type: 3}
   shAmmoCollect: {fileID: 424440170136908605, guid: c4399c81e7f70e74e99554aca51b605c, type: 3}
-  healthCollect: {fileID: 5599055582514740619, guid: 79b70089d8d729b4ca0100cb97df6393, type: 3}
+  healthCollect: {fileID: 2900825979033026816, guid: 89847461f96179a4c9457190552d8563, type: 3}
 --- !u!1001 &3832690271448216725
 PrefabInstance:
   m_ObjectHideFlags: 0

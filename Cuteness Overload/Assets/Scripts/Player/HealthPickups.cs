@@ -12,9 +12,11 @@ public class HealthPickups : MonoBehaviour
     private Transform collect2;
     [SerializeField]
     private Transform collect3;
+    [SerializeField]
+    private Transform collect4;
 
     private float timeElapsed;
-    private float timeDesired = 5;
+    private float timeDesired = 2;
     private int random;
     private GameObject[] pickups;
 
@@ -24,22 +26,12 @@ public class HealthPickups : MonoBehaviour
         if (pickups.Length == 0)
         {
             timeElapsed += Time.deltaTime;
-            if(timeElapsed >= timeDesired)
+            if (timeElapsed >= timeDesired)
             {
-                random = Random.Range(1, 3);
-                if(random == 1)
-                {
-                    Instantiate(healthCollectable, collect1.transform.position, collect1.transform.rotation);
-                }
-                if(random == 2)
-                {
-                    Instantiate(healthCollectable, collect2.transform.position, collect2.transform.rotation);
-                }
-                if(random == 3)
-                {
-                    Instantiate(healthCollectable, collect3.transform.position, collect3.transform.rotation);
-                }
-                timeElapsed = 0;
+                Instantiate(healthCollectable, collect1.transform.position, collect1.transform.rotation);
+                Instantiate(healthCollectable, collect2.transform.position, collect2.transform.rotation);
+                Instantiate(healthCollectable, collect3.transform.position, collect3.transform.rotation);
+                Instantiate(healthCollectable, collect4.transform.position, collect4.transform.rotation);
             }
         }
     }

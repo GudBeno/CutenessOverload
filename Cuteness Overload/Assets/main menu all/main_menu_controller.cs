@@ -64,4 +64,8 @@ public class main_menu_controller : MonoBehaviour
     {
         exitanim.Play("EXIT DEFAULT");
     }
+    public void exitgame()
+    {
+        Application.Quit();
+    }
 }

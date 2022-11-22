@@ -48,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
 
     public bool death = false;
 
-    public GameObject controlstab;
     bool controls;
 
     private void Start() //Gets the Components needed in the later functions
@@ -56,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         player = GetComponent<Transform>();
         CamTrans = FPSCam.GetComponent<Transform>();
-        controlstab.SetActive(false);
         controls = false;
     }
 

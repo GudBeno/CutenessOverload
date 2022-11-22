@@ -75,10 +75,11 @@ public class EnemyManager : MonoBehaviour
         WakingUp();
         if(health <= 0)
         {
-            gamecontrol.killcount++;
+
             if (this.gameObject.CompareTag("Bearnemy"))
             {
                 Instantiate(explosion, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
+                gamecontrol.killcount++;
             }
             SpawnRandom();
             Destroy(gameObject);
