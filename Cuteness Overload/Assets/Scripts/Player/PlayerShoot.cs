@@ -80,6 +80,9 @@ public class PlayerShoot : MonoBehaviour
     public Animator gunsanim;
 
     public bool death = false;
+    public GameObject chainsawslash;
+
+    public bool cankill, ardeal;
 
     //public enum weapon
     //{
@@ -91,7 +94,8 @@ public class PlayerShoot : MonoBehaviour
     //weapon currentWeapon;
     private void Start() //Locks the cursor to the centre and hides it
     {
-//        chainsaw.SetActive(false);
+        cankill = false;
+         chainsawslash.SetActive(false);
 //        sniperObject.SetActive(false);
 //        shotgunObject.SetActive(false);
 //        arObject.SetActive(true);
@@ -115,10 +119,6 @@ public class PlayerShoot : MonoBehaviour
         }
 
     }
-
-  
-
-  
 
     public void CollectARAmmo() //Collect AR Ammo function. Has checks so you dont get negative ammo
     {
@@ -370,16 +370,34 @@ public class PlayerShoot : MonoBehaviour
 
     public void AssaultRifle()
     {
+        ardeal = false;
         if (isAssaultRifle)
         {
+            RaycastHit arhit;
             clipAmmoText.text = _arInClip.ToString();
             storedAmmoText.text = _arHeld.ToString();
             crosshair.enabled = true;
-//            arObject.SetActive(true);
-//            shotgunObject.SetActive(false);
-//            sniperObject.SetActive(false);
-//            chainsaw.SetActive(false);
+            //            arObject.SetActive(true);
+            //            shotgunObject.SetActive(false);
+            //            sniperObject.SetActive(false);
+            //            chainsaw.SetActive(false);
             //Shooting
+            if (Physics.Raycast(FPSCam.transform.position, FPSCam.transform.forward, out arhit, 10f))
+            {
+                if (arhit.transform.CompareTag("Bearnemy"))
+                {
+                    Debug.Log("boing");
+                    ardeal = true;
+                }
+                else if (arhit.transform.CompareTag("Beenemy"))
+                {
+                    ardeal = true;
+                }
+                else
+                {
+                    ardeal = false;
+                }
+            }
             if (canshoot)
             {
                 if (Input.GetMouseButton(0))
@@ -395,8 +413,14 @@ public class PlayerShoot : MonoBehaviour
 
                         if (_arInClip > 0)
                         {
+                            if (ardeal == true)
+                            {
+                                EnemyManager enemy = arhit.transform.GetComponent<EnemyManager>();
+                                enemy.ardamager();
+
+                            }
                             gunsanim.Play("AR_fire");
-                            GameObject arBullet = Instantiate(semiautobullet, FPSCam.transform.position, FPSCam.transform.rotation);
+                            GameObject arBullet = Instantiate(semiautobullet, projSpawn.transform.position, projSpawn.transform.rotation);
                             //arBullet.transform.position = FPSCam.transform.position + FPSCam.transform.forward;
                             //arBullet.transform.position = FPSCam.transform.forward;
                             _arInClip--;
@@ -422,16 +446,48 @@ public class PlayerShoot : MonoBehaviour
 
     public void Chainsaw()
     {
+        cankill = false;
         if (isChainsaw)
         {
+            RaycastHit chainhit;
             clipAmmoText.text = "";
             storedAmmoText.text = "";
-            gunsanim.Play("chainsaw_default");
             crosshair.enabled = false;
-//            chainsaw.SetActive(true);
-//            sniperObject.SetActive(false);
-//            shotgunObject.SetActive(false);
-//            arObject.SetActive(false);
+            if (Physics.Raycast(FPSCam.transform.position, FPSCam.transform.forward, out chainhit, 4f))
+                {
+                if (chainhit.transform.CompareTag("Bearnemy"))
+                {
+                    cankill = true;
+                }
+                else
+                {
+                    cankill = false;
+                }
+            }
+            if (canshoot)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (cankill)
+                    {
+                        EnemyManager enemy = chainhit.transform.GetComponent<EnemyManager>();
+                        enemy.destroy();
+                        StartCoroutine(chainsawkill());
+                    }
+                    else
+                    {
+                        StartCoroutine(chainsawattack());
+                    }
+                }
+                else
+                {
+                    gunsanim.Play("chainsaw_default");
+                }
+            }
+            //            chainsaw.SetActive(true);
+            //            sniperObject.SetActive(false);
+            //            shotgunObject.SetActive(false);
+            //            arObject.SetActive(false);
         }
     }
 
@@ -576,7 +632,7 @@ public class PlayerShoot : MonoBehaviour
         canshoot = false;
         _snInClip--;
         gunsanim.Play("sniper_fire");
-        GameObject snBullet = Instantiate(sniperbullet, FPSCam.transform.position, FPSCam.transform.rotation);
+        GameObject snBullet = Instantiate(sniperbullet, projSpawn.transform.position, projSpawn.transform.rotation);
         yield return new WaitForSeconds(0.15f);
         gunsanim.Play("sniper_default");
         canshoot = true;
@@ -605,7 +661,7 @@ public class PlayerShoot : MonoBehaviour
     IEnumerator shotgunshoot()
     {
         canshoot = false;
-        GameObject sgBullet = Instantiate(shotgunbullet, FPSCam.transform.position, FPSCam.transform.rotation);
+        GameObject sgBullet = Instantiate(shotgunbullet, projSpawn.transform.position, projSpawn.transform.rotation);
         _sgInClip--;
         gunsanim.Play("shotgun_fire");
         yield return new WaitForSeconds(0.4f);
@@ -616,10 +672,28 @@ public class PlayerShoot : MonoBehaviour
     IEnumerator scopedshot()
     {
         canshoot = false;
-        GameObject snBullet = Instantiate(sniperbullet, FPSCam.transform.position, FPSCam.transform.rotation);
+        GameObject snBullet = Instantiate(sniperbullet, projSpawn.transform.position, projSpawn.transform.rotation);
         _snInClip--;
         yield return new WaitForSeconds(0.15f);
         canshoot = true;
+    }
+    IEnumerator chainsawattack()
+    {
+        canshoot = false;
+        gunsanim.Play("chainsaw_attack");
+        yield return new WaitForSeconds(0.3f);
+        chainsawslash.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        chainsawslash.SetActive(false);
+        gunsanim.Play("chainsaw_default");
+        canshoot = true;
+    }
+    IEnumerator chainsawkill()
+    {
+        canshoot = false;
+        gunsanim.Play("chainsaw_kill");
+        yield return new WaitForSeconds(0.7f);
+        gunsanim.Play("chainsaw_default");
     }
 
 }

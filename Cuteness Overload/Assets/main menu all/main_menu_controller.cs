@@ -11,6 +11,7 @@ public class main_menu_controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined;
         counter = 0;
     }
 

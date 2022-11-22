@@ -6,9 +6,9 @@ using UnityEngine.AI;
 public class EnemyManager : MonoBehaviour
 {
     private float health;
-    private float ARDamage = 15f;
+    private float ARDamage = 10f;
     private float SniperDamage = 55f;
-    private float ShotgunDamage = 45f;
+    private float ShotgunDamage = 5f;
     private int randomDrop;
     public GameObject explosion;
     public GameObject gamecon;
@@ -51,11 +51,6 @@ public class EnemyManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("SemiAutoBullet"))
-        {
-            health = health - ARDamage;
-            Destroy(other);
-        }
         if (other.gameObject.CompareTag("SniperBullet"))
         {
             health = health - SniperDamage;
@@ -66,7 +61,7 @@ public class EnemyManager : MonoBehaviour
             health = health - ShotgunDamage;
             Destroy(other);
         }
-        if (other.gameObject.CompareTag("Chainsaw") && Input.GetMouseButton(0))
+        if (other.gameObject.CompareTag("Chainsaw"))
         {
             health = 0;
         }
@@ -92,10 +87,6 @@ public class EnemyManager : MonoBehaviour
         distance = Vector3.Distance(this.transform.position, player.transform.position);
     }
 
-    private void OnDestroy()
-    {
-
-    }
 
     public void SpawnRandom()
     {
@@ -139,5 +130,13 @@ public class EnemyManager : MonoBehaviour
         {
             GetComponent<NavMeshAgent>().speed = 5f;
         }
+    }
+    public void destroy()
+    {
+        Destroy(this.gameObject);
+    }
+    public void ardamager()
+    {
+        health = health - ARDamage;
     }
 }

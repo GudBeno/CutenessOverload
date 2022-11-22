@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class PlayerDamage : MonoBehaviour
 {
     public float playerHealth = 8f; //This is the player's current health value
-    public GameObject defaultscreen, deathscreen,ragdoll, ragcam, maincam;
+    public GameObject defaultscreen, deathscreen,ragdoll, ragcam, maincam, gunui;
     public PlayerShoot shooter;
     public PlayerMovement mover;
     public Rigidbody rb;
@@ -23,6 +23,7 @@ public class PlayerDamage : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.isKinematic = false;
         deathscreen.SetActive(false);
         playerHealth = 8f;
         mover = GetComponent<PlayerMovement>();
@@ -93,15 +94,17 @@ public class PlayerDamage : MonoBehaviour
     }
     public void death()
     {
+        rb.isKinematic = true;
         shooter.death = true;
         mover.death = true;
         defaultscreen.SetActive(false);
+        gunui.SetActive(false);
         deathscreen.SetActive(true);
 
         ragdoll.SetActive(true);
         ragcam.SetActive(true);
 
-      
+        Cursor.lockState = CursorLockMode.Confined;
         maincam.SetActive(false);
 
 
