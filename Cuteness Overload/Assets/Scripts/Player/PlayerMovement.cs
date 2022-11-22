@@ -30,14 +30,11 @@ public class PlayerMovement : MonoBehaviour
     private Transform player;
     private Transform CamTrans;
 
-    public float maxslopeang;
-    private RaycastHit slopehit;
-
     private KeyCode forward = KeyCode.W;
     private KeyCode backward = KeyCode.S;
     private KeyCode left = KeyCode.A;
     private KeyCode right = KeyCode.D;
-    private KeyCode dodge = KeyCode.LeftControl;
+    private KeyCode dodge = KeyCode.E;
     private KeyCode jump = KeyCode.Space;
     private KeyCode sprint = KeyCode.LeftShift;
 
@@ -65,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update() //Checks the distance constantly for the jumping. Runs the functions.
     {
+        rb.angularVelocity = Vector3.zero;
         
         if (death == false)
         {
@@ -85,12 +83,8 @@ public class PlayerMovement : MonoBehaviour
         
         if (Input.GetKey(forward))
         {
-            if (onslope())
-            {
-                rb.AddForce(getslopedirec() * speed);
-            }
-           rb.AddForce(transform.forward * speed);
-            //transform.Translate(transform.forward * speed, Space.Self); //Currently clips through the ground
+            //rb.AddForce(transform.forward * speed);
+            transform.Translate(transform.forward * speed); //Currently clips through the ground
             //Couldnt get rb.velocity to work without a lot of extra research and work, could try tomorrow morning, but not sure
             moveFor = true;
         }
@@ -100,8 +94,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(backward))
         {
-            rb.AddForce(transform.forward * -speed);
-           // transform.Translate(transform.forward * -speed, Space.Self);
+            //rb.AddForce(transform.forward * -speed);
+            transform.Translate(transform.forward * -speed);
             moveBack = true;
         }
         if (Input.GetKeyUp(backward))
@@ -110,8 +104,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(left))
         {
-            rb.AddForce(transform.right * -speed);
-            //transform.Translate(transform.right * -speed, Space.Self);
+            //rb.AddForce(transform.right * -speed);
+            transform.Translate(transform.right * -speed);
             moveLeft = true;
         }
         if (Input.GetKeyUp(left))
@@ -120,8 +114,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(right))
         {
-            rb.AddForce(transform.right * speed);
-            //transform.Translate(transform.right * speed, Space.Self);
+            //rb.AddForce(transform.right * speed);
+            transform.Translate(transform.right * speed);
             moveRight = true;
         }
         if (Input.GetKeyUp(right))
@@ -264,21 +258,5 @@ public class PlayerMovement : MonoBehaviour
         {
             canJump = false;
         }
-    }
-    private bool onslope()
-    {
-        if (Physics.Raycast(transform.position, Vector3.down, out slopehit, 3f))
-        {
-            float angle = Vector3.Angle(Vector3.up, slopehit.normal);
-            return angle < maxslopeang && angle != 0;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    private Vector3 getslopedirec()
-    {
-        return Vector3.ProjectOnPlane(transform.forward, slopehit.normal).normalized;
     }
 }
