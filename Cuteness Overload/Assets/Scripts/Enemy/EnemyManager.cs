@@ -79,7 +79,6 @@ public class EnemyManager : MonoBehaviour
             if (this.gameObject.CompareTag("Bearnemy"))
             {
                 Instantiate(explosion, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
-                gamecontrol.killcount++;
             }
             SpawnRandom();
             Destroy(gameObject);
@@ -139,5 +138,9 @@ public class EnemyManager : MonoBehaviour
     public void ardamager()
     {
         health = health - ARDamage;
+    }
+    private void OnDestroy()
+    {
+        gamecontrol.killcount++;
     }
 }

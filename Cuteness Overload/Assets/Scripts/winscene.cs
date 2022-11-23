@@ -13,4 +13,8 @@ public class winscene : MonoBehaviour
     {
         Application.Quit();
     }
+    public void mainmenu()
+    {
+        SceneManager.LoadScene("MAIN MENU");
+    }
 }

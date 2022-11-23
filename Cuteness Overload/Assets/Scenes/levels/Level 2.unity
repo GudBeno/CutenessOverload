@@ -1572,6 +1572,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Ground
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4719c222ade1dc5419ecd20e10fd12ec, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4719c222ade1dc5419ecd20e10fd12ec, type: 3}
 --- !u!4 &362297943 stripped
@@ -2010,7 +2014,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 565210557}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.1, y: 19.8, z: 26.7}
+  m_LocalPosition: {x: 9.1, y: 21.17, z: 26.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2381,7 +2385,7 @@ PrefabInstance:
     - target: {fileID: 230377476304426861, guid: a03059da3502b384cbd7f57c3bb2a29b, type: 3}
       propertyPath: ground
       value: 
-      objectReference: {fileID: 280385183}
+      objectReference: {fileID: 0}
     - target: {fileID: 5068771426468162025, guid: a03059da3502b384cbd7f57c3bb2a29b, type: 3}
       propertyPath: healthText
       value: 
@@ -3212,6 +3216,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4361872957885912415, guid: 0a342c89f552a514ca070285dd9cab69, type: 3}
   m_PrefabInstance: {fileID: 1397548001}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1397548003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397548002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08fedc56a8029e448998c279d2a0a7c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1414576137
 PrefabInstance:
   m_ObjectHideFlags: 0
