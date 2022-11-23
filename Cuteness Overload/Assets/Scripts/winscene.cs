@@ -5,7 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class winscene : MonoBehaviour
 {
-  public void playagain()
+    public void Start()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+    public void playagain()
     {
         SceneManager.LoadScene("Level 1");
     }

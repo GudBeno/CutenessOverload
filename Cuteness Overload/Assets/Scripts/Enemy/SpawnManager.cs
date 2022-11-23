@@ -29,7 +29,7 @@ public class SpawnManager : MonoBehaviour
     private float timer = 0f;
     public float counter = 0;
     bool canspawn = true;
-    bool first = true, second = true, third = true, fourth = true, fifth = true, sixth = true, seventh = true, eigth = true, nineth = true, tenth = true;
+    bool first = true, second = true, third = true, fourth = true, fifth = true, sixth = true, seventh = true, eigth = true, nineth = true, tenth = true, eleventh = true, twelth = true, thirteen = true;
     int whichspawn;
 
     private void Start()
@@ -52,6 +52,18 @@ public class SpawnManager : MonoBehaviour
                 first = false;
             }
         }
+        if (counter > 20 && counter < 21)
+        {
+            if (eleventh)
+            {
+                firstspawner();
+                secondspawner();
+                thirdspawner();
+                fourthspawner();
+                eleventh = false;
+            }
+
+        }
         if (counter > 30 && counter < 31)
         {
             if (second)
@@ -61,6 +73,18 @@ public class SpawnManager : MonoBehaviour
                 second = false;
             }
         }
+        if (counter > 40 && counter < 41)
+        {
+            if (twelth)
+            {
+                firstspawner();
+                secondspawner();
+                thirdspawner();
+                fourthspawner();
+                twelth = false;
+            }
+
+        }
         if (counter > 50 && counter < 51)
         {
             if (third)
@@ -68,6 +92,18 @@ public class SpawnManager : MonoBehaviour
                 fourthspawner();
                 thirdspawner();
                 third = false;
+            }
+
+        }
+        if (counter > 60 && counter < 61)
+        {
+            if (thirteen)
+            {
+                firstspawner();
+                secondspawner();
+                thirdspawner();
+                fourthspawner();
+                thirteen = false;
             }
 
         }

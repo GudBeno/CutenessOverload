@@ -10,12 +10,14 @@ public class gamecontroller : MonoBehaviour
     public Text kills, killgoaltext;
     bool contab = false;
     public GameObject goop, openportaltext, killcard;
+    public int scenenum;
     // Start is called before the first frame update
     void Start()
     {
         goop.SetActive(false);
         killgoaltext.text = "/" + killgoal.ToString();
         openportaltext.SetActive(false);
+        allscenesmanager.level = scenenum;
     }
 
     // Update is called once per frame

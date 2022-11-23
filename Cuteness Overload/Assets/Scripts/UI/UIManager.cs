@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     public PlayerDamage playdamn;
     public PlayerShoot playshoot;
     public Text ammoclip, ammomax;
-    bool contab;
+    bool contab, pause;
     private void Start()
     {
         deathpanel.SetActive(false);
@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
         stamspritechange();
         healthspritechange();
         ammospritechange();
+        pause = false;
     }
 
     public void Controls()
@@ -46,6 +47,20 @@ public class UIManager : MonoBehaviour
                 Time.timeScale = 0;
             }
         }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (pause)
+            {
+                Time.timeScale = 1;
+                pause = false;
+            }
+            else
+            {
+                Time.timeScale = 0;
+                pause = true;
+            }
+        }
+
     }
     private void stamspritechange()
     {
