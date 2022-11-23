@@ -91,19 +91,19 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnRandom()
     {
-        if(randomDrop <= 50)
+        if(randomDrop <= 40)
         {
             Instantiate(healthCollect, new Vector3(this.transform.position.x, this.transform.position.y , this.transform.position.z), this.transform.rotation);
         }
-        if(randomDrop >50 && randomDrop <= 70)
+        if(randomDrop >40 && randomDrop <= 60)
         {
             Instantiate(arAmmoCollect, new Vector3(this.transform.position.x, this.transform.position.y , this.transform.position.z), this.transform.rotation);
         }
-        if(randomDrop > 70 && randomDrop <= 85)
+        if(randomDrop > 60 && randomDrop <= 80)
         {
             Instantiate(snAmmoCollect, new Vector3(this.transform.position.x, this.transform.position.y , this.transform.position.z), this.transform.rotation);
         }
-        if(randomDrop > 85)
+        if(randomDrop > 80)
         {
             Instantiate(shAmmoCollect, new Vector3(this.transform.position.x, this.transform.position.y , this.transform.position.z), this.transform.rotation);
         }

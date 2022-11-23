@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class gamecontroller : MonoBehaviour
 {
@@ -19,13 +20,13 @@ public class gamecontroller : MonoBehaviour
     void Update()
     {
         kills.text = killcount.ToString();
-        if (killcount >= 50)
+        if (killcount >= 30)
         {
             youwin();
         }
     }
     public void youwin()
     {
-
+        SceneManager.LoadScene("win scene"); 
     }
 }

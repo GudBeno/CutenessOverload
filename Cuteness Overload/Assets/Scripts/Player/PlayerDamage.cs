@@ -99,7 +99,6 @@ public class PlayerDamage : MonoBehaviour
     }
     public void death()
     {
-        Time.timeScale = 0;
         rb.isKinematic = true;
         shooter.death = true;
         mover.death = true;
@@ -109,11 +108,17 @@ public class PlayerDamage : MonoBehaviour
 
         ragdoll.SetActive(true);
         ragcam.SetActive(true);
-        Time.timeScale = 0;
 
         Cursor.lockState = CursorLockMode.Confined;
         maincam.SetActive(false);
+        StartCoroutine(deathtimer());
 
 
+
+    }
+    IEnumerator deathtimer()
+    {
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene("lose scene");
     }
 }

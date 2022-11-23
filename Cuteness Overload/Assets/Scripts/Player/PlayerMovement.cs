@@ -247,14 +247,14 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             canJump = true;
-            speed = 50;
-            sprintSpeed = 60;
+            speed = 250;
+            sprintSpeed = 270;
         }
         if (collision.gameObject.CompareTag("Ground"))
         {
             canJump = true;
-            speed = 25;
-            sprintSpeed = 27;
+            speed = 170;
+            sprintSpeed = 190;
         }
     }
 
